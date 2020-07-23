@@ -1,0 +1,7 @@
+{
+  "name": "MontessoriActivities",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
