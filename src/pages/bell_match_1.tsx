@@ -1,25 +1,45 @@
-import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonImg } from '@ionic/react';
-import './bell_match_1.css';
+import {
+  IonContent,
+  IonHeader,
+  IonImg,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from "@ionic/react";
+import React from "react";
+import "./bell_match_1.css";
+
+const labelRef = React.createRef<HTMLDivElement>();
 
 const bell_match_1: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage ref={labelRef}>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Match bell</IonTitle>
+          <IonTitle>Match bell first title</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Match bell</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-          <IonImg id="test" src="../../assets/img/bell.jpg" alt="golden bell" />
-
-
+      <IonContent className="ion-padding">
+        <IonList>
+          <IonItem
+            button
+            onClick={() => {
+              debugger;
+              const label = labelRef.current?.querySelector("#testLabel");
+              label!.textContent = "BOO";
+            }}
+          >
+            <IonImg
+              id="test"
+              src="../../assets/img/bell.jpg"
+              alt="golden bell in item"
+            />
+          </IonItem>
+          <IonLabel id="testLabel">Change me.</IonLabel>
+        </IonList>
       </IonContent>
     </IonPage>
   );
