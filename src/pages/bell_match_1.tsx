@@ -12,8 +12,12 @@ import {
 import { notifications } from "ionicons/icons";
 import React from "react";
 import "./bell_match_1.css";
+import { Howl, Howler } from "howler";
 
 const labelRef = React.createRef<HTMLDivElement>();
+const a4 = new Howl({
+  src: ["../../assets/sounds/pianoA4.mp3"]
+});
 
 const bell_match_1: React.FC = () => {
   return (
@@ -28,11 +32,10 @@ const bell_match_1: React.FC = () => {
           <IonItem
             button
             onClick={() => {
-              const label = labelRef.current?.querySelector("#testLabel");
-              label!.textContent = "BOO";
+              a4.play();
             }}
           >
-            <IonIcon class="icon" size="large" icon={notifications} />
+            <IonIcon class="icon" icon={notifications} />
           </IonItem>
           <IonLabel id="testLabel">Change me.</IonLabel>
         </IonList>

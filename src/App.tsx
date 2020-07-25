@@ -12,7 +12,7 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import { ellipse, square, triangle } from "ionicons/icons";
 import bell_match_1 from "./pages/bell_match_1";
-import { Bell_match_3 } from "./pages/bell_match_3";
+import bell_match_3 from "./pages/bell_match_3";
 import bells from "./pages/bells";
 
 /* Core CSS required for Ionic components to work properly */
@@ -40,7 +40,7 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route path="/bell_match_1" component={bell_match_1} exact={true} />
-          <Route path="/bell_match_3" component={Bell_match_3} exact={true} />
+          <Route path="/bell_match_3" component={bell_match_3} exact={true} />
           <Route path="/bells" component={bells} />
           <Route
             path="/"
