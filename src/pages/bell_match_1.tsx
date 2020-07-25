@@ -1,14 +1,15 @@
 import {
   IonContent,
   IonHeader,
-  IonImg,
   IonItem,
   IonLabel,
   IonList,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonIcon
 } from "@ionic/react";
+import { notifications } from "ionicons/icons";
 import React from "react";
 import "./bell_match_1.css";
 
@@ -27,16 +28,11 @@ const bell_match_1: React.FC = () => {
           <IonItem
             button
             onClick={() => {
-              debugger;
               const label = labelRef.current?.querySelector("#testLabel");
               label!.textContent = "BOO";
             }}
           >
-            <IonImg
-              id="test"
-              src="../../assets/img/bell.jpg"
-              alt="golden bell in item"
-            />
+            <IonIcon class="icon" size="large" icon={notifications} />
           </IonItem>
           <IonLabel id="testLabel">Change me.</IonLabel>
         </IonList>
