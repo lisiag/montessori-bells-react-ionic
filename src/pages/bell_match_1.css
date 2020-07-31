@@ -1,4 +1,9 @@
-.icon {
-    color: gold;
-    font-size: 200px;
+.left_icon {
+    color: yellow;
+    font-size: 100px;
+}
+
+.right_icon {
+    color: blue;
+    font-size: 100px;
 }
