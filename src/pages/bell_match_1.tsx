@@ -14,6 +14,7 @@ import { notifications } from "ionicons/icons";
 import React from "react";
 import "./bell_match_1.css";
 import { Howl, Howler } from "howler";
+import Draggable from "react-draggable";
 
 const labelRef = React.createRef<HTMLDivElement>();
 const a4 = new Howl({
@@ -49,17 +50,19 @@ const bell_match_1: React.FC = () => {
                     </IonRow>
                     <IonRow>
                         <IonCol>
-                            <IonItem
-                                button
-                                onClick={() => {
-                                    a4.play();
-                                }}
-                            >
-                                <IonIcon
-                                    class="left_icon"
-                                    icon={notifications}
-                                />
-                            </IonItem>
+                            <Draggable>
+                                <IonItem
+                                    button
+                                    onClick={() => {
+                                        a4.play();
+                                    }}
+                                >
+                                    <IonIcon
+                                        class="left_icon"
+                                        icon={notifications}
+                                    />
+                                </IonItem>
+                            </Draggable>
                         </IonCol>
                         <IonCol></IonCol>
                         <IonCol>
