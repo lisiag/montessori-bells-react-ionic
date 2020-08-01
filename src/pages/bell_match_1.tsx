@@ -80,6 +80,7 @@ export class BellMatch extends React.Component {
                                         this.state.deltaPosition.x = 0;
                                         this.state.deltaPosition.y = 0;
                                     }}
+                                    onDrag={this.handleDrag}
                                     onStop={ev => {
                                         console.log(ev);
                                         if (
