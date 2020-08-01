@@ -1,6 +1,8 @@
 .left_icon {
     color: yellow;
     font-size: 100px;
+    position: absolute;
+    z-index: 100;
 }
 
 .right_icon {

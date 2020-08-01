@@ -13,7 +13,7 @@ import {
 import { notifications } from "ionicons/icons";
 import React from "react";
 import "./bell_match_1.css";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import Draggable from "react-draggable";
 
 const labelRef = React.createRef<HTMLDivElement>();
@@ -50,18 +50,19 @@ const bell_match_1: React.FC = () => {
                     </IonRow>
                     <IonRow>
                         <IonCol>
-                            <Draggable>
-                                <IonItem
-                                    button
-                                    onClick={() => {
-                                        a4.play();
-                                    }}
-                                >
-                                    <IonIcon
-                                        class="left_icon"
-                                        icon={notifications}
-                                    />
-                                </IonItem>
+                            <Draggable
+                                defaultClassNameDragging=""
+                                defaultClassNameDragged=""
+                                grid={[100, 100]}
+                                onStop={ev => {
+                                    console.log(ev);
+                                    a4.play();
+                                }}
+                            >
+                                <IonIcon
+                                    className="left_icon"
+                                    icon={notifications}
+                                />
                             </Draggable>
                         </IonCol>
                         <IonCol></IonCol>
