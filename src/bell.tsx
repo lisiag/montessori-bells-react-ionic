@@ -15,18 +15,57 @@ export class Bell extends React.Component<BellProps> {
 
     constructor(props: BellProps) {
         super(props);
-        this.bell = (
-            <IonCol>
-                <Draggable
-                    onStart={() => {
-                        Util.notes[this.props.note].play();
-                        return false;
-                    }}
-                >
-                    <IonIcon className={this.props.cls} icon={notifications} />
-                </Draggable>
-            </IonCol>
-        );
+        if (this.props.cls === "left_icon") {
+            // create a bell in the left column that can be dragged around the screen
+            this.bell = (
+                <IonCol>
+                    <Draggable
+                        defaultClassNameDragging=""
+                        defaultClassNameDragged=""
+                        onStart={() => {
+                            this.setState({
+                                deltaPosition: {
+                                    x: 0,
+                                    y: 0
+                                }
+                            });
+                        }}
+                        onDrag={this.handleDrag}
+                        onStop={ev => {
+                            console.log(ev);
+                            if (
+                                this.state.deltaPosition.x === 0 &&
+                                this.state.deltaPosition.y === 0
+                            ) {
+                                Util.notes[this.props.note].play();
+                            }
+                        }}
+                    >
+                        <IonIcon
+                            className={this.props.cls}
+                            icon={notifications}
+                        />
+                    </Draggable>
+                </IonCol>
+            );
+        } else {
+            // create a bell in the right column that cannot be dragged around the screen
+            this.bell = (
+                <IonCol>
+                    <Draggable
+                        onStart={() => {
+                            Util.notes[this.props.note].play();
+                            return false;
+                        }}
+                    >
+                        <IonIcon
+                            className={this.props.cls}
+                            icon={notifications}
+                        />
+                    </Draggable>
+                </IonCol>
+            );
+        }
     }
 
     state = {
