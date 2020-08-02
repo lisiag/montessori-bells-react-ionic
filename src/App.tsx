@@ -10,7 +10,7 @@ import {
     IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { notifications, home, information } from "ionicons/icons";
+import { notifications, home, informationCircle } from "ionicons/icons";
 import { BellMatch } from "./pages/bell_match";
 import homepage from "./pages/home";
 import about from "./pages/about";
@@ -62,7 +62,7 @@ const App: React.FC = () => (
                         <IonLabel>Home</IonLabel>
                     </IonTabButton>
                     <IonTabButton tab="about" href="/about">
-                        <IonIcon icon={information} />
+                        <IonIcon icon={informationCircle} />
                         <IonLabel>About</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
