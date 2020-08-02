@@ -10,10 +10,10 @@ import {
     IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ellipse, square, triangle } from "ionicons/icons";
-import { BellMatch } from "./pages/bell_match_1";
-import bell_match_3 from "./pages/bell_match_3";
-import bells from "./pages/bells";
+import { notifications, home, information } from "ionicons/icons";
+import { BellMatch } from "./pages/bell_match";
+import homepage from "./pages/home";
+import about from "./pages/about";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -40,34 +40,30 @@ const App: React.FC = () => (
             <IonTabs>
                 <IonRouterOutlet>
                     <Route
-                        path="/bell_match_1"
+                        path="/bell_match"
                         component={BellMatch}
                         exact={true}
                     />
-                    <Route
-                        path="/bell_match_3"
-                        component={bell_match_3}
-                        exact={true}
-                    />
-                    <Route path="/bells" component={bells} />
+                    <Route path="/home" component={homepage} exact={true} />
+                    <Route path="/about" component={about} />
                     <Route
                         path="/"
-                        render={() => <Redirect to="/bell_match_1" />}
+                        render={() => <Redirect to="/bell_match" />}
                         exact={true}
                     />
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
-                    <IonTabButton tab="bell_match_1" href="/bell_match_1">
-                        <IonIcon icon={triangle} />
+                    <IonTabButton tab="bell_match" href="/bell_match">
+                        <IonIcon icon={notifications} />
                         <IonLabel>Match bell</IonLabel>
                     </IonTabButton>
-                    <IonTabButton tab="bell_match_3" href="/bell_match_3">
-                        <IonIcon icon={ellipse} />
-                        <IonLabel>Match bells (3)</IonLabel>
+                    <IonTabButton tab="home" href="/home">
+                        <IonIcon icon={home} />
+                        <IonLabel>Home</IonLabel>
                     </IonTabButton>
-                    <IonTabButton tab="bells" href="/bells">
-                        <IonIcon icon={square} />
-                        <IonLabel>Bells</IonLabel>
+                    <IonTabButton tab="about" href="/about">
+                        <IonIcon icon={information} />
+                        <IonLabel>About</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
             </IonTabs>

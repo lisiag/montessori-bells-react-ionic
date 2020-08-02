@@ -1,7 +1,6 @@
 import {
     IonContent,
     IonHeader,
-    IonItem,
     IonGrid,
     IonRow,
     IonCol,
@@ -12,7 +11,7 @@ import {
 } from "@ionic/react";
 import { notifications } from "ionicons/icons";
 import React from "react";
-import "./bell_match_1.css";
+import "./bell_match.css";
 import { Util } from "../util";
 import Draggable from "react-draggable";
 
@@ -54,7 +53,7 @@ export class BellMatch extends React.Component {
             <IonPage ref={this.labelRef}>
                 <IonHeader>
                     <IonToolbar>
-                        <IonTitle>Match bell first title</IonTitle>
+                        <IonTitle>Match bell</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
