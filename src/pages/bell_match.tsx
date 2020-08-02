@@ -14,6 +14,9 @@ import React from "react";
 import "./bell_match.css";
 import { Util } from "../util";
 import Draggable from "react-draggable";
+import { Bell } from "../bell";
+
+const debug = new Bell({});
 
 export class BellMatch extends React.Component {
     labelRef: any;
@@ -28,9 +31,9 @@ export class BellMatch extends React.Component {
     threeRandof8 = Util.getRandoms(8, 3);
 
     /*
-       Pick a random bell from the three on the right, for the user to match
+       Pick a random bell from the three in the righthand column, for the user to match
      */
-    oneRand = this.threeRandof8[Math.floor(Math.random() * 3)];
+    randBell = this.threeRandof8[Math.floor(Math.random() * 3)];
 
     state = {
         deltaPosition: {
@@ -95,7 +98,7 @@ export class BellMatch extends React.Component {
                                             this.state.deltaPosition.x === 0 &&
                                             this.state.deltaPosition.y === 0
                                         ) {
-                                            Util.notes[this.oneRand].play();
+                                            Util.notes[this.randBell].play();
                                         }
                                     }}
                                 >
