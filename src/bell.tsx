@@ -32,7 +32,6 @@ export class Bell extends React.Component<BellProps> {
                         }}
                         onDrag={this.handleDrag}
                         onStop={ev => {
-                            console.log(ev);
                             if (
                                 this.state.deltaPosition.x === 0 &&
                                 this.state.deltaPosition.y === 0
