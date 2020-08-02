@@ -10,10 +10,11 @@ import {
     IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { notifications, home, informationCircle } from "ionicons/icons";
-import { BellMatch } from "./pages/bell_match";
+import { person, home, informationCircle } from "ionicons/icons";
+import login from "./pages/login";
 import homepage from "./pages/home";
 import about from "./pages/about";
+import { BellMatch } from "./pages/bell_match";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -40,22 +41,23 @@ const App: React.FC = () => (
             <IonTabs>
                 <IonRouterOutlet>
                     <Route
-                        path="/bell_match"
-                        component={BellMatch}
-                        exact={true}
-                    />
-                    <Route path="/home" component={homepage} exact={true} />
-                    <Route path="/about" component={about} />
-                    <Route
                         path="/"
                         render={() => <Redirect to="/home" />}
                         exact={true}
                     />
+                    <Route path="/login" component={login} exact={true} />
+                    <Route path="/home" component={homepage} exact={true} />
+                    <Route path="/about" component={about} exact={true} />
+                    <Route
+                        path="/bell_match"
+                        component={BellMatch}
+                        exact={true}
+                    />
                 </IonRouterOutlet>
                 <IonTabBar slot="bottom">
-                    <IonTabButton tab="bell_match" href="/bell_match">
-                        <IonIcon icon={notifications} />
-                        <IonLabel>Match bell</IonLabel>
+                    <IonTabButton tab="login" href="/login">
+                        <IonIcon icon={person} />
+                        <IonLabel>Log In</IonLabel>
                     </IonTabButton>
                     <IonTabButton tab="home" href="/home">
                         <IonIcon icon={home} />
