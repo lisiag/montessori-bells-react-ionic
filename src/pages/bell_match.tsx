@@ -35,7 +35,7 @@ export class BellMatch extends React.Component {
             <IonPage ref={this.labelRef}>
                 <IonHeader>
                     <IonToolbar>
-                        <IonTitle>Match bell</IonTitle>
+                        <IonTitle>Pair the matching bells</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">

@@ -48,7 +48,7 @@ const App: React.FC = () => (
                     <Route path="/about" component={about} />
                     <Route
                         path="/"
-                        render={() => <Redirect to="/bell_match" />}
+                        render={() => <Redirect to="/home" />}
                         exact={true}
                     />
                 </IonRouterOutlet>
