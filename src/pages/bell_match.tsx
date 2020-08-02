@@ -16,8 +16,6 @@ import { Util } from "../util";
 import Draggable from "react-draggable";
 import { Bell } from "../bell";
 
-const debug = new Bell({});
-
 export class BellMatch extends React.Component {
     labelRef: any;
     constructor(props: any) {
@@ -64,19 +62,10 @@ export class BellMatch extends React.Component {
                         <IonRow>
                             <IonCol></IonCol>
                             <IonCol></IonCol>
-                            <IonCol>
-                                <Draggable
-                                    onStart={() => {
-                                        Util.notes[this.threeRandof8[0]].play();
-                                        return false;
-                                    }}
-                                >
-                                    <IonIcon
-                                        className="right_icon"
-                                        icon={notifications}
-                                    />
-                                </Draggable>
-                            </IonCol>
+                            <Bell
+                                note={this.threeRandof8[0]}
+                                cls="right_icon"
+                            />
                         </IonRow>
                         <IonRow>
                             <IonCol>
