@@ -13,6 +13,13 @@ export interface BellProps {
 export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
 
+    state = {
+        startPosition: {
+            x: 0,
+            y: 0
+        }
+    };
+
     constructor(props: BellProps) {
         super(props);
         if (this.props.cls === "left_icon") {
@@ -22,19 +29,18 @@ export class Bell extends React.Component<BellProps> {
                     <Draggable
                         defaultClassNameDragging=""
                         defaultClassNameDragged=""
-                        onStart={() => {
+                        onStart={(ev, ui) => {
                             this.setState({
-                                deltaPosition: {
-                                    x: 0,
-                                    y: 0
+                                startPosition: {
+                                    x: ui.x,
+                                    y: ui.y
                                 }
                             });
                         }}
-                        onDrag={this.handleDrag}
-                        onStop={ev => {
+                        onStop={(ev, ui) => {
                             if (
-                                this.state.deltaPosition.x === 0 &&
-                                this.state.deltaPosition.y === 0
+                                this.state.startPosition.x === ui.x &&
+                                this.state.startPosition.y === ui.y
                             ) {
                                 Util.notes[this.props.note].play();
                             }
@@ -66,22 +72,6 @@ export class Bell extends React.Component<BellProps> {
             );
         }
     }
-
-    state = {
-        deltaPosition: {
-            x: 0,
-            y: 0
-        }
-    };
-
-    handleDrag = (e: any, ui: any) => {
-        this.setState({
-            deltaPosition: {
-                x: ui.deltaX,
-                y: ui.deltaY
-            }
-        });
-    };
 
     render() {
         return this.bell;
