@@ -22,8 +22,11 @@ export class BellMatch extends React.Component {
 
     /*
        Get 3 random notes for the bells in the righthand column
+       and sort in descending order.
      */
-    threeRandof8 = Util.getRandoms(8, 3);
+    threeRandof8 = Util.getRandoms(8, 3)
+        .sort()
+        .reverse();
 
     /*
        Pick a random note from the three bells in the righthand column, for the user to match
