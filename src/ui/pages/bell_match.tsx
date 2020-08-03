@@ -12,6 +12,7 @@ import React from "react";
 import "./bell_match.css";
 import { Util } from "../../business/util";
 import { Bell } from "../components/bell";
+import { Toolbar } from "../components/toolbar";
 
 export class BellMatch extends React.Component {
     labelRef: any;
@@ -42,6 +43,7 @@ export class BellMatch extends React.Component {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
+                    <Toolbar />
                     <IonGrid>
                         <IonRow>
                             <IonCol></IonCol>

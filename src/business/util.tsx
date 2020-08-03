@@ -24,7 +24,11 @@ export const Util = {
         return result;
     },
 
-    notes: [] as Howl[]
+    notes: [] as Howl[],
+
+    refreshPage: () => {
+        window.location.reload(false);
+    }
 };
 
 Util.notes = [
