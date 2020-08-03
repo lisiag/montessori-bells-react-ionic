@@ -3,7 +3,7 @@ import { notifications } from "ionicons/icons";
 import React, { ReactNode } from "react";
 import Draggable from "react-draggable";
 import "./bell.css";
-import { Util } from "./util";
+import { Util } from "../../business/util";
 
 export interface BellProps {
     note: number;

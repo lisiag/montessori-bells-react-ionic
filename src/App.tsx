@@ -11,10 +11,10 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { person, home, informationCircle } from "ionicons/icons";
-import login from "./pages/login";
-import homepage from "./pages/home";
-import about from "./pages/about";
-import { BellMatch } from "./pages/bell_match";
+import login from "./ui/pages/login";
+import homepage from "./ui/pages/home";
+import about from "./ui/pages/about";
+import { BellMatch } from "./ui/pages/bell_match";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";

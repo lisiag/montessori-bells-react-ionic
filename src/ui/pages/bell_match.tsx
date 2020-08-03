@@ -10,8 +10,8 @@ import {
 } from "@ionic/react";
 import React from "react";
 import "./bell_match.css";
-import { Util } from "../util";
-import { Bell } from "../bell";
+import { Util } from "../../business/util";
+import { Bell } from "../components/bell";
 
 export class BellMatch extends React.Component {
     labelRef: any;
