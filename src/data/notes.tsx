@@ -6,7 +6,7 @@ export class Notes {
     constructor() {
         this._notes = [];
         /* Names of the notes of the scale of C major from middle-C in descending order */
-        const noteNames = ["C5", "B4", "A4", "G4", "F4", "E4", "D4", "C4"];
+        const noteNames = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
         const colors = [
             "red",
             "darkorange",
