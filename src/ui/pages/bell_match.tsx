@@ -10,7 +10,6 @@ import {
 } from "@ionic/react";
 import React from "react";
 import "./bell_match.css";
-import { Util } from "../../business/util";
 import { Bells } from "../components/bells";
 
 export class BellMatch extends React.Component {
@@ -20,18 +19,7 @@ export class BellMatch extends React.Component {
         this.labelRef = React.createRef<HTMLDivElement>();
     }
 
-    /*
-       Get 3 random notes for the bells in the righthand column
-     */
-    threeRandof8 = Util.getRandoms(8, 3);
-
     render() {
-        return (
-            <Bells
-                numPairs={1}
-                rref={this.labelRef}
-                notes={this.threeRandof8}
-            />
-        );
+        return <Bells numPairs={1} numRows={3} rref={this.labelRef} />;
     }
 }
