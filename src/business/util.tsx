@@ -1,4 +1,5 @@
-import { Howl } from "howler";
+import { Notes } from "../data/notes";
+import { Note } from "../data/note";
 
 export const Util = {
     /*
@@ -24,36 +25,12 @@ export const Util = {
         return result;
     },
 
-    notes: [] as Howl[],
+    /* The data info related to the note for each bell */
+    notes: [] as Note[],
 
     refreshPage: () => {
         window.location.reload(false);
     }
 };
 
-Util.notes = [
-    new Howl({
-        src: ["../../assets/sounds/pianoC4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoD4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoE4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoF4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoG4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoA4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoB4.mp3"]
-    }),
-    new Howl({
-        src: ["../../assets/sounds/pianoC5.mp3"]
-    })
-];
+Util.notes = new Notes().notes;

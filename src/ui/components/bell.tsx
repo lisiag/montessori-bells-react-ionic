@@ -2,6 +2,7 @@ import { IonCol, IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
 import React, { ReactNode } from "react";
 import Draggable from "react-draggable";
+import { Howl } from "howler";
 import "./bell.css";
 import { Util } from "../../business/util";
 
@@ -15,6 +16,7 @@ const TOP_BOUND = 125;
 
 export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
+    howl: Howl;
 
     state = {
         startPosition: {
@@ -29,6 +31,8 @@ export class Bell extends React.Component<BellProps> {
 
     constructor(props: BellProps) {
         super(props);
+        this.howl = new Howl({ src: [Util.notes[props.note].soundLocation] });
+
         if (this.props.cls === "left_icon") {
             // create a bell in the left column that can be dragged around the screen
             this.bell = (
@@ -51,7 +55,7 @@ export class Bell extends React.Component<BellProps> {
                                 this.state.startPosition.x === ui.x &&
                                 this.state.startPosition.y === ui.y
                             ) {
-                                Util.notes[this.props.note].play();
+                                this.howl.play();
                             } else {
                                 {
                                     /* Bell has been dragged. */
@@ -96,7 +100,7 @@ export class Bell extends React.Component<BellProps> {
                 <IonCol>
                     <Draggable
                         onStart={() => {
-                            Util.notes[this.props.note].play();
+                            this.howl.play();
                             return false;
                         }}
                     >
