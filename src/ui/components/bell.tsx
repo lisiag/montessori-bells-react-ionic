@@ -10,11 +10,19 @@ export interface BellProps {
     cls: string;
 }
 
+const LEFT_BOUND = 0;
+const TOP_BOUND = 0;
+const RIGHT_BOUND = 0;
+
 export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
 
     state = {
         startPosition: {
+            x: 0,
+            y: 0
+        },
+        controlledPosition: {
             x: 0,
             y: 0
         }
@@ -27,6 +35,7 @@ export class Bell extends React.Component<BellProps> {
             this.bell = (
                 <IonCol>
                     <Draggable
+                        position={this.state.controlledPosition}
                         defaultClassNameDragging=""
                         defaultClassNameDragged=""
                         onStart={(ev, ui) => {
@@ -38,11 +47,33 @@ export class Bell extends React.Component<BellProps> {
                             });
                         }}
                         onStop={(ev, ui) => {
+                            /* only play the note if bell is clicked but not dragged */
                             if (
                                 this.state.startPosition.x === ui.x &&
                                 this.state.startPosition.y === ui.y
                             ) {
                                 Util.notes[this.props.note].play();
+                            } else {
+                                {
+                                    /* Bell has been dragged. */
+                                    /* If it has been dragged off screen, snap it back to edge of screen. */
+                                }
+                                let { x, y } = ui;
+                                const grid = ui.node.closest("ion-grid")!;
+                                const gridBound = grid.getBoundingClientRect();
+                                const bound = ui.node.getBoundingClientRect();
+
+                                if (bound.left < gridBound.left) {
+                                    /*                                     snap bell back */
+                                }
+
+                                x = 100;
+                                y = 100;
+                                {
+                                    /*Important note: this.setState doesn't work here for some reason! */
+                                }
+                                this.state.controlledPosition.x = x;
+                                this.state.controlledPosition.y = y;
                             }
                         }}
                     >
