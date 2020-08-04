@@ -10,9 +10,8 @@ export interface BellProps {
     cls: string;
 }
 
-const LEFT_BOUND = 0;
-const TOP_BOUND = 0;
-const RIGHT_BOUND = 0;
+const LEFT_BOUND = 10;
+const TOP_BOUND = 125;
 
 export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
@@ -25,8 +24,7 @@ export class Bell extends React.Component<BellProps> {
         controlledPosition: {
             x: 0,
             y: 0
-        },
-        distToTop: 0
+        }
     };
 
     constructor(props: BellProps) {
@@ -40,23 +38,11 @@ export class Bell extends React.Component<BellProps> {
                         defaultClassNameDragging=""
                         defaultClassNameDragged=""
                         onStart={(ev, ui) => {
-                            const grid = ui.node.closest("ion-grid")!;
-                            const gridBound = grid.getBoundingClientRect();
-                            const bound = ui.node.getBoundingClientRect();
-                            const distToGridTop = bound.top - gridBound.top;
-                            console.log(
-                                "bound.top: " +
-                                    bound.top +
-                                    " gridBound.top: " +
-                                    gridBound.top
-                            );
                             this.setState({
                                 startPosition: {
                                     x: ui.x,
                                     y: ui.y
-                                },
-                                // TODO: problem with this is that it is updated every time, not just first time
-                                distToTop: distToGridTop
+                                }
                             });
                         }}
                         onStop={(ev, ui) => {
@@ -78,7 +64,7 @@ export class Bell extends React.Component<BellProps> {
 
                                 if (bound.left < gridBound.left) {
                                     /* snap bell back */
-                                    x = gridBound.left - 18;
+                                    x = -LEFT_BOUND;
                                 }
                                 if (
                                     bound.right >
@@ -87,8 +73,7 @@ export class Bell extends React.Component<BellProps> {
                                     x = gridBound.right - 2.3 * bound.width;
                                 }
                                 if (bound.top < gridBound.top) {
-                                    // TODO: fix this
-                                    y = 0;
+                                    y = -TOP_BOUND;
                                 }
                                 {
                                     /*Important note: this.setState doesn't work here for some reason! */
