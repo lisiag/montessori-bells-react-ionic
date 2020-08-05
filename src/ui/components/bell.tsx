@@ -1,6 +1,6 @@
 import { IonCol, IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
-import React, { ReactNode } from "react";
+import React from "react";
 import Draggable, { DraggableData } from "react-draggable";
 import { Howl } from "howler";
 import "./bell.css";
@@ -16,7 +16,6 @@ const TOP_BOUND = 125;
 const RIGHT_BOUND_FACTOR = 2.25;
 
 export class Bell extends React.Component<BellProps> {
-    bell: ReactNode;
     howl: Howl;
 
     startPosition = {
@@ -31,6 +30,13 @@ export class Bell extends React.Component<BellProps> {
     constructor(props: BellProps) {
         super(props);
         this.howl = new Howl({ src: [Util.notes[props.note].soundLocation] });
+    }
+
+    onStart(ui: DraggableData) {
+        this.startPosition = {
+            x: ui.x,
+            y: ui.y
+        };
     }
 
     /* If bell is close to or overlapping righthand bells:
@@ -110,10 +116,7 @@ export class Bell extends React.Component<BellProps> {
                         defaultClassNameDragging=""
                         defaultClassNameDragged=""
                         onStart={(_ev, ui) => {
-                            this.startPosition = {
-                                x: ui.x,
-                                y: ui.y
-                            };
+                            this.onStart(ui);
                         }}
                         onStop={(_ev, ui) => {
                             /* only play the note if bell is clicked but not dragged */
