@@ -1,7 +1,7 @@
 import { IonCol, IonIcon } from "@ionic/react";
 import { notifications } from "ionicons/icons";
 import React, { ReactNode } from "react";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData } from "react-draggable";
 import { Howl } from "howler";
 import "./bell.css";
 import { Util } from "../../business/util";
@@ -18,42 +18,44 @@ export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
     howl: Howl;
 
-    state = {
-        startPosition: {
-            x: 0,
-            y: 0
-        },
-        controlledPosition: {
-            x: 0,
-            y: 0
-        }
+    startPosition = {
+        x: 0,
+        y: 0
+    };
+    controlledPosition = {
+        x: 0,
+        y: 0
     };
 
     constructor(props: BellProps) {
         super(props);
         this.howl = new Howl({ src: [Util.notes[props.note].soundLocation] });
+    }
 
+    alignYIfClose(ui: DraggableData): number {
+        return ui.y;
+    }
+
+    render() {
         if (this.props.cls === "left_icon") {
             // create a bell in the left column that can be dragged around the screen
-            this.bell = (
+            return (
                 <IonCol>
                     <Draggable
-                        position={this.state.controlledPosition}
+                        position={this.controlledPosition}
                         defaultClassNameDragging=""
                         defaultClassNameDragged=""
-                        onStart={(ev, ui) => {
-                            this.setState({
-                                startPosition: {
-                                    x: ui.x,
-                                    y: ui.y
-                                }
-                            });
+                        onStart={(_ev, ui) => {
+                            this.startPosition = {
+                                x: ui.x,
+                                y: ui.y
+                            };
                         }}
-                        onStop={(ev, ui) => {
+                        onStop={(_ev, ui) => {
                             /* only play the note if bell is clicked but not dragged */
                             if (
-                                this.state.startPosition.x === ui.x &&
-                                this.state.startPosition.y === ui.y
+                                this.startPosition.x === ui.x &&
+                                this.startPosition.y === ui.y
                             ) {
                                 this.howl.play();
                             } else {
@@ -69,21 +71,20 @@ export class Bell extends React.Component<BellProps> {
                                 if (bound.left < gridBound.left) {
                                     /* snap bell back */
                                     x = -LEFT_BOUND;
-                                }
-                                if (
+                                } else if (
                                     bound.right >
                                     gridBound.right - 1.6 * bound.width
                                 ) {
                                     x = gridBound.right - 2.3 * bound.width;
+                                    y = this.alignYIfClose(ui);
                                 }
                                 if (bound.top < gridBound.top) {
                                     y = -TOP_BOUND;
+                                } else if (bound.bottom > gridBound.bottom) {
+                                    y += gridBound.bottom - bound.bottom;
                                 }
-                                {
-                                    /*Important note: this.setState doesn't work here for some reason! */
-                                }
-                                this.state.controlledPosition.x = x;
-                                this.state.controlledPosition.y = y;
+                                this.controlledPosition.x = x;
+                                this.controlledPosition.y = y;
                             }
                         }}
                     >
@@ -96,7 +97,7 @@ export class Bell extends React.Component<BellProps> {
             );
         } else {
             // create a bell in the right column that cannot be dragged around the screen
-            this.bell = (
+            return (
                 <IonCol>
                     <Draggable
                         onStart={() => {
@@ -112,9 +113,5 @@ export class Bell extends React.Component<BellProps> {
                 </IonCol>
             );
         }
-    }
-
-    render() {
-        return this.bell;
     }
 }
