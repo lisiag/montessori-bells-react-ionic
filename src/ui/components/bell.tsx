@@ -39,6 +39,20 @@ export class Bell extends React.Component<BellProps> {
         };
     }
 
+    onStop(ui: DraggableData) {
+        /* only play the note if bell is clicked but not dragged */
+        if (this.startPosition.x === ui.x && this.startPosition.y === ui.y) {
+            this.howl.play();
+        } else {
+            /* Bell has been dragged.
+             * If it has been dragged next to one of the righthand bells, snap it to sit immediately to the left of that bell.
+             * If it has been dragged outside the clear space left of the righthand bells, snap it back into that space. */
+            let { x, y } = this.positionBell(ui);
+            this.controlledPosition.x = x;
+            this.controlledPosition.y = y;
+        }
+    }
+
     /* If bell is close to or overlapping righthand bells:
      *     if it is close to a righthand bell: adjust x and y so it is aligned vertically with that bell and sitting immediately to the left of that bell
      *     else if it is overlapping or beyond the righthand bells: snap x back to the left of the righthand bells
@@ -119,20 +133,7 @@ export class Bell extends React.Component<BellProps> {
                             this.onStart(ui);
                         }}
                         onStop={(_ev, ui) => {
-                            /* only play the note if bell is clicked but not dragged */
-                            if (
-                                this.startPosition.x === ui.x &&
-                                this.startPosition.y === ui.y
-                            ) {
-                                this.howl.play();
-                            } else {
-                                /* Bell has been dragged.
-                                 * If it has been dragged next to one of the righthand bells, snap it to sit immediately to the left of that bell.
-                                 * If it has been dragged outside the clear space left of the righthand bells, snap it back into that space. */
-                                let { x, y } = this.positionBell(ui);
-                                this.controlledPosition.x = x;
-                                this.controlledPosition.y = y;
-                            }
+                            this.onStop(ui);
                         }}
                     >
                         <IonIcon
