@@ -13,6 +13,7 @@ export interface BellProps {
 
 const LEFT_BOUND = 10;
 const TOP_BOUND = 125;
+const RIGHT_BOUND_FACTOR = 2.25;
 
 export class Bell extends React.Component<BellProps> {
     bell: ReactNode;
@@ -32,32 +33,71 @@ export class Bell extends React.Component<BellProps> {
         this.howl = new Howl({ src: [Util.notes[props.note].soundLocation] });
     }
 
-    alignYIfClose(ui: DraggableData): number {
+    /* If bell is close to or overlapping righthand bells:
+     *     if it is close to a righthand bell: adjust x and y so it is aligned vertically with that bell and sitting immediately to the left of that bell
+     *     else if it is overlapping or beyond the righthand bells: snap x back to the left of the righthand bells
+     * Else if bell is beyond grid to the left: snap x back to within grid
+     * If bell is beyond grid to the top/bottom: snap y back to within grid
+     */
+    positionBell(ui: DraggableData): { x: number; y: number } {
+        const grid = ui.node.closest("ion-grid")!;
+        const gridBound = grid.getBoundingClientRect();
         const bound = ui.node.getBoundingClientRect();
+        let { x, y } = ui;
+
+        if (bound.right > gridBound.right - 1.6 * bound.width) {
+            /* Bell is close to or overlapping righthand bells */
+            ({ x, y } = this.positionBellRight(ui));
+        } else if (bound.left < gridBound.left) {
+            /* If bell is off screen to the left, snap bell back just inside screen */
+            x = -LEFT_BOUND;
+        }
+        /* If bell is off screen to the top or bottom, snap bell back just inside screen */
+        if (bound.top < gridBound.top) {
+            y = -TOP_BOUND;
+        } else if (bound.bottom > gridBound.bottom) {
+            y += gridBound.bottom - bound.bottom;
+        }
+
+        return { x, y };
+    }
+
+    /* If bell is close to or overlapping righthand bells:
+     *     if it is close to a righthand bell: adjust x and y so it is aligned vertically with that bell and sitting immediately to the left of that bell
+     *     else if it is overlapping or beyond the righthand bells: snap x back to the left of the righthand bells
+     */
+    positionBellRight(ui: DraggableData): { x: number; y: number } {
+        const bound = ui.node.getBoundingClientRect();
+        let { x, y } = ui;
+        const grid = ui.node.closest("ion-grid")!;
         /* get all the bells in the right column */
-        const rightBells = ui.node
-            .closest("ion-grid")!
-            .getElementsByClassName("rightBell");
+        const rightBells = grid.getElementsByClassName("rightBell");
 
         /* find which of the bells in the right column is closest */
-        let closest = rightBells[0];
-        let minDiff = 1000000;
-        for (let i = 0; i < rightBells.length; ++i) {
+        let closestBound = rightBells[0].getBoundingClientRect();
+        let minVertDiff = Math.abs(bound.top - closestBound.top);
+        for (let i = 1; i < rightBells.length; ++i) {
             const rBellBound = rightBells[i].getBoundingClientRect();
-            const currentDiff = Math.abs(bound.top - rBellBound.top);
-            if (currentDiff < minDiff) {
-                minDiff = currentDiff;
-                closest = rightBells[i];
+            const vertDiff = Math.abs(bound.top - rBellBound.top);
+            if (vertDiff < minVertDiff) {
+                minVertDiff = vertDiff;
+                closestBound = rBellBound;
             }
         }
 
-        const diff = bound.top - closest.getBoundingClientRect().top;
-        if (Math.abs(diff) < 20) {
-            /* Adjust my y such that I align with the closest bell in the right column */
-            return ui.y - diff;
+        const vertDiff = bound.top - closestBound.top;
+        const horizDiff = bound.left - closestBound.left;
+        const gridBoundRight = grid.getBoundingClientRect().right;
+        if (Math.abs(vertDiff) < 20 && Math.abs(horizDiff) < 100) {
+            /* Bell is close to closest, so adjust bell's x and y such that it aligns vertically with closest and sits immediately left of it */
+            x = gridBoundRight - RIGHT_BOUND_FACTOR * bound.width;
+            y = ui.y - vertDiff;
+        } else if (bound.right > gridBoundRight - 1.1 * bound.width) {
+            /* Bell is overlapping or beyond the righthand bells, so adjust bell's x so it is to the left of the righthand bells */
+            x = gridBoundRight - RIGHT_BOUND_FACTOR * bound.width;
         }
-        /* Don't align me with nearest righthand bell if I'm not very close to it */
-        return ui.y;
+
+        return { x, y };
     }
 
     render() {
@@ -83,40 +123,10 @@ export class Bell extends React.Component<BellProps> {
                             ) {
                                 this.howl.play();
                             } else {
-                                {
-                                    /* Bell has been dragged. */
-                                    /* If it has been dragged outside the clear space left of the righthand bells, snap it back into the clear space. */
-                                }
-                                let { x, y } = ui;
-                                const grid = ui.node.closest("ion-grid")!;
-                                const gridBound = grid.getBoundingClientRect();
-                                const bound = ui.node.getBoundingClientRect();
-
-                                if (
-                                    bound.right >
-                                    gridBound.right - 1.6 * bound.width
-                                ) {
-                                    /* If bell is close to the righthand bells or beyond, snap back to just left of the righthand bells */
-                                    x = gridBound.right - 2.3 * bound.width;
-                                    /* As the bell is close to the righthand bells, the user most
-                                    likely intends to match it with the nearest righthand bell, so
-                                    align the bell vertically with the nearest righthand bell unless
-                                    it is not vertically close to any righthand bell (e.g. half way
-                                    between two) */
-                                    y = this.alignYIfClose(ui);
-                                } else {
-                                    if (bound.left < gridBound.left) {
-                                        /* If bell is off screen to the left, snap bell back just inside screen */
-                                        x = -LEFT_BOUND;
-                                    }
-                                    if (bound.top < gridBound.top) {
-                                        y = -TOP_BOUND;
-                                    } else if (
-                                        bound.bottom > gridBound.bottom
-                                    ) {
-                                        y += gridBound.bottom - bound.bottom;
-                                    }
-                                }
+                                /* Bell has been dragged.
+                                 * If it has been dragged next to one of the righthand bells, snap it to sit immediately to the left of that bell.
+                                 * If it has been dragged outside the clear space left of the righthand bells, snap it back into that space. */
+                                let { x, y } = this.positionBell(ui);
                                 this.controlledPosition.x = x;
                                 this.controlledPosition.y = y;
                             }
