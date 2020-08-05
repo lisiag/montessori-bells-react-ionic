@@ -51,9 +51,13 @@ export class Bell extends React.Component<BellProps> {
             }
         }
 
-        /* Adjust my y such that I align with the closest bell in the right column */
         const diff = bound.top - closest.getBoundingClientRect().top;
-        return ui.y - diff;
+        if (Math.abs(diff) < 20) {
+            /* Adjust my y such that I align with the closest bell in the right column */
+            return ui.y - diff;
+        }
+        /* Don't align me with nearest righthand bell if I'm not very close to it */
+        return ui.y;
     }
 
     render() {
@@ -81,7 +85,7 @@ export class Bell extends React.Component<BellProps> {
                             } else {
                                 {
                                     /* Bell has been dragged. */
-                                    /* If it has been dragged off screen, snap it back to edge of screen. */
+                                    /* If it has been dragged outside the clear space left of the righthand bells, snap it back into the clear space. */
                                 }
                                 let { x, y } = ui;
                                 const grid = ui.node.closest("ion-grid")!;
@@ -92,11 +96,17 @@ export class Bell extends React.Component<BellProps> {
                                     bound.right >
                                     gridBound.right - 1.6 * bound.width
                                 ) {
+                                    /* If bell is close to the righthand bells or beyond, snap back to just left of the righthand bells */
                                     x = gridBound.right - 2.3 * bound.width;
+                                    /* As the bell is close to the righthand bells, the user most
+                                    likely intends to match it with the nearest righthand bell, so
+                                    align the bell vertically with the nearest righthand bell unless
+                                    it is not vertically close to any righthand bell (e.g. half way
+                                    between two) */
                                     y = this.alignYIfClose(ui);
                                 } else {
                                     if (bound.left < gridBound.left) {
-                                        /* snap bell back */
+                                        /* If bell is off screen to the left, snap bell back just inside screen */
                                         x = -LEFT_BOUND;
                                     }
                                     if (bound.top < gridBound.top) {
