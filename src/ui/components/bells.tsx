@@ -71,9 +71,9 @@ export class Bells extends React.Component<BellsProps> {
                 </IonHeader>
                 <IonContent className="ion-padding">
                     <Toolbar instructions={this.props.instructions} />
-                    <IonGrid>
+                    <IonGrid id="Bells">
                         {this.indices.map(index => (
-                            <IonRow>
+                            <IonRow key={index}>
                                 {this.renderCell(index)}
                                 <IonCol></IonCol>
                                 <Bell
