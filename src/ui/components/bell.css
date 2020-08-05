@@ -2,7 +2,7 @@
     color: orange;
     font-size: 100px;
     position: absolute;
-    z-index: 100;
+    z-index: 10;
 }
 
 .right_icon {
