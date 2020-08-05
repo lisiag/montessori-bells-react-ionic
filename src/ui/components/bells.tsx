@@ -18,6 +18,7 @@ export interface BellsProps {
     numPairs: number;
     numRows: number;
     rref: any;
+    instructions: string;
 }
 
 export class Bells extends React.Component<BellsProps> {
@@ -25,6 +26,7 @@ export class Bells extends React.Component<BellsProps> {
     numPairs: number /* the number of pairs bells for user to match; the number of bells in the lefthand col */;
     numRows: number; /* the number of rows of bells; the number of bells in the righthand column */
     rref: any;
+    instructions: string;
     notes: Array<number>;
     notesSorted: Array<number>;
     indices: Array<number>;
@@ -46,6 +48,7 @@ export class Bells extends React.Component<BellsProps> {
         this.numPairs = props.numPairs;
         this.numRows = props.numRows;
         this.rref = props.rref;
+        this.instructions = props.instructions;
 
         /*
        Get random notes for the bells in the righthand column
@@ -74,7 +77,7 @@ export class Bells extends React.Component<BellsProps> {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
-                    <Toolbar />
+                    <Toolbar instructions={this.instructions} />
                     <IonGrid>
                         {this.indices.map(index => (
                             <IonRow>

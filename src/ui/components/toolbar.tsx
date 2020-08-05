@@ -5,14 +5,24 @@ import {
     IonIcon,
     IonLabel
 } from "@ionic/react";
+import React, { ReactNode } from "react";
 import { play, helpCircle, eye } from "ionicons/icons";
-import React from "react";
 import "./toolbar.css";
 import { Util } from "../../business/util";
 
-export class Toolbar extends React.Component {
-    render() {
-        return (
+export interface ToolbarProps {
+    instructions: string;
+}
+
+export class Toolbar extends React.Component<ToolbarProps> {
+    toolbar: ReactNode;
+    instructions: string;
+
+    constructor(props: ToolbarProps) {
+        super(props);
+        this.instructions = props.instructions;
+
+        this.toolbar = (
             <IonToolbar>
                 <IonButtons>
                     <IonButton
@@ -23,7 +33,11 @@ export class Toolbar extends React.Component {
                         <IonIcon icon={play} />
                         <IonLabel>Play again</IonLabel>
                     </IonButton>
-                    <IonButton onClick={() => {}}>
+                    <IonButton
+                        onClick={() => {
+                            alert(this.instructions);
+                        }}
+                    >
                         <IonIcon icon={helpCircle} />
                         <IonLabel>Instructions</IonLabel>
                     </IonButton>
@@ -34,5 +48,9 @@ export class Toolbar extends React.Component {
                 </IonButtons>
             </IonToolbar>
         );
+    }
+
+    render() {
+        return this.toolbar;
     }
 }
