@@ -8,7 +8,7 @@ import {
     IonGrid,
     IonRow
 } from "@ionic/react";
-import React from "react";
+import React, { RefObject } from "react";
 import "./bells.css";
 import { Toolbar } from "./toolbar";
 import { Bell } from "./bell";
@@ -17,7 +17,7 @@ import { Util } from "../../business/util";
 export interface BellsProps {
     numPairs: number /* the number of pairs of bells for user to match; i.e. the number of bells in the lefthand col */;
     numRows: number /* the number of rows of bells; the number of bells in the righthand column */;
-    rref: any;
+    bellmatchRef: RefObject<HTMLDivElement>;
     instructions: string;
 }
 
@@ -25,6 +25,7 @@ export class Bells extends React.Component<BellsProps> {
     notes: Array<number>;
     notesSorted: Array<number>;
     indices: Array<number>;
+    bellsRef: RefObject<HTMLDivElement>;
 
     /* If there is only one bell on the left for the user to pair up with a bell on the right, place
        it in the second row; otherwise place a bell on the left in every row. Even though I want a
@@ -40,6 +41,7 @@ export class Bells extends React.Component<BellsProps> {
 
     constructor(props: BellsProps) {
         super(props);
+        this.bellsRef = React.createRef<HTMLDivElement>();
 
         /*
            Get random notes for the bells in the righthand column
@@ -63,14 +65,17 @@ export class Bells extends React.Component<BellsProps> {
         /* Arrange the bells: on the left in random order; on the right sorted high to low
          */
         return (
-            <IonPage ref={this.props.rref}>
+            <IonPage ref={this.bellsRef}>
                 <IonHeader>
                     <IonToolbar>
                         <IonTitle>Pair the matching bells</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent className="ion-padding">
-                    <Toolbar instructions={this.props.instructions} />
+                    <Toolbar
+                        bellsRef={this.bellsRef}
+                        instructions={this.props.instructions}
+                    />
                     <IonGrid id="Bells">
                         {this.indices.map(index => (
                             <IonRow key={index}>

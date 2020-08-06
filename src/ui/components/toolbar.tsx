@@ -1,5 +1,5 @@
 import { IonButtons, IonButton, IonIcon, IonLabel } from "@ionic/react";
-import React from "react";
+import React, { RefObject } from "react";
 import Modal from "react-modal";
 import { play, helpCircle, eye, close } from "ionicons/icons";
 import "./toolbar.css";
@@ -7,6 +7,7 @@ import { Util } from "../../business/util";
 
 export interface ToolbarProps {
     instructions: string;
+    bellsRef: RefObject<HTMLDivElement>;
 }
 
 export interface ToolbarState {
