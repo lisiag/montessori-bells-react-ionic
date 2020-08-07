@@ -16,7 +16,9 @@ const TOP_BOUND = 125;
 const RIGHT_BOUND_FACTOR = 2.25;
 
 export class Bell extends React.Component<BellProps> {
-    howl: Howl;
+    /* Definite assignment assertion so I can initialize in my own function, not in constructor */
+    howl!: Howl;
+    currentNote = -1;
 
     startPosition = {
         x: 0,
@@ -29,7 +31,22 @@ export class Bell extends React.Component<BellProps> {
 
     constructor(props: BellProps) {
         super(props);
-        this.howl = new Howl({ src: [Util.notes[props.note].soundLocation] });
+        this.changeNote(props.note);
+    }
+
+    private changeNote(note: number) {
+        this.currentNote = note;
+        this.howl = new Howl({
+            src: [Util.notes[this.currentNote].soundLocation]
+        });
+        this.startPosition = {
+            x: 0,
+            y: 0
+        };
+        this.controlledPosition = {
+            x: 0,
+            y: 0
+        };
     }
 
     onStart(ui: DraggableData) {
@@ -121,6 +138,10 @@ export class Bell extends React.Component<BellProps> {
     }
 
     render() {
+        if (this.howl == null || this.currentNote != this.props.note) {
+            this.changeNote(this.props.note);
+        }
+
         if (this.props.cls === "left_icon") {
             // create a bell in the left column that can be dragged around the screen
             return (

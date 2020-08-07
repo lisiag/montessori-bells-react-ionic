@@ -22,9 +22,9 @@ export interface BellsProps {
 }
 
 export class Bells extends React.Component<BellsProps> {
-    notes: Array<number>;
-    notesSorted: Array<number>;
-    indices: Array<number>;
+    notes: Array<number> = [];
+    notesSorted: Array<number> = [];
+    indices: Array<number> = [];
     bellsRef: RefObject<HTMLDivElement>;
 
     /* If there is only one bell on the left for the user to pair up with a bell on the right, place
@@ -42,7 +42,10 @@ export class Bells extends React.Component<BellsProps> {
     constructor(props: BellsProps) {
         super(props);
         this.bellsRef = React.createRef<HTMLDivElement>();
+        this.init();
+    }
 
+    init() {
         /*
            Get random notes for the bells in the righthand column
          */
@@ -75,6 +78,10 @@ export class Bells extends React.Component<BellsProps> {
                     <Toolbar
                         bellsRef={this.bellsRef}
                         instructions={this.props.instructions}
+                        onPlayAgain={() => {
+                            this.init();
+                            this.setState({ someState: 23 });
+                        }}
                     />
                     <IonGrid id="Bells">
                         {this.indices.map(index => (
