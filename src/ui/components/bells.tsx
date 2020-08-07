@@ -1,23 +1,13 @@
-import {
-    IonCol,
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonGrid,
-    IonRow
-} from "@ionic/react";
-import React, { RefObject } from "react";
+import { IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
+import React from "react";
+import { Util } from "../../business/util";
+import { Bell } from "./bell";
 import "./bells.css";
 import { Toolbar } from "./toolbar";
-import { Bell } from "./bell";
-import { Util } from "../../business/util";
 
 export interface BellsProps {
     numPairs: number /* the number of pairs of bells for user to match; i.e. the number of bells in the lefthand col */;
     numRows: number /* the number of rows of bells; the number of bells in the righthand column */;
-    bellmatchRef: RefObject<HTMLDivElement>;
     instructions: string;
 }
 
@@ -25,7 +15,6 @@ export class Bells extends React.Component<BellsProps> {
     notes: Array<number> = [];
     notesSorted: Array<number> = [];
     indices: Array<number> = [];
-    bellsRef: RefObject<HTMLDivElement>;
 
     /* If there is only one bell on the left for the user to pair up with a bell on the right, place
        it in the second row; otherwise place a bell on the left in every row. Even though I want a
@@ -41,8 +30,6 @@ export class Bells extends React.Component<BellsProps> {
 
     constructor(props: BellsProps) {
         super(props);
-        this.bellsRef = React.createRef<HTMLDivElement>();
-        this.init();
     }
 
     init() {
@@ -67,36 +54,29 @@ export class Bells extends React.Component<BellsProps> {
     render() {
         /* Arrange the bells: on the left in random order; on the right sorted high to low
          */
+        this.init();
         return (
-            <IonPage ref={this.bellsRef}>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Pair the matching bells</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <IonContent className="ion-padding">
-                    <Toolbar
-                        bellsRef={this.bellsRef}
-                        instructions={this.props.instructions}
-                        onPlayAgain={() => {
-                            this.init();
-                            this.setState({ someState: 23 });
-                        }}
-                    />
-                    <IonGrid id="Bells">
-                        {this.indices.map(index => (
-                            <IonRow key={index}>
-                                {this.renderCell(index)}
-                                <IonCol></IonCol>
-                                <Bell
-                                    note={this.notesSorted[index]}
-                                    cls="right_icon"
-                                />
-                            </IonRow>
-                        ))}
-                    </IonGrid>
-                </IonContent>
-            </IonPage>
+            <IonContent className="ion-padding">
+                <Toolbar
+                    instructions={this.props.instructions}
+                    onPlayAgain={() => {
+                        this.init();
+                        this.setState({ reload: true }); // set any property to force update
+                    }}
+                />
+                <IonGrid id="Bells">
+                    {this.indices.map(index => (
+                        <IonRow key={index}>
+                            {this.renderCell(index)}
+                            <IonCol></IonCol>
+                            <Bell
+                                note={this.notesSorted[index]}
+                                cls="right_icon"
+                            />
+                        </IonRow>
+                    ))}
+                </IonGrid>
+            </IonContent>
         );
     }
 }
