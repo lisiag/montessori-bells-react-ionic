@@ -59,6 +59,9 @@ export class Bells extends React.Component<BellsProps> {
                         this.init();
                         this.setState({ reload: true }); // set any property to force update
                     }}
+                    onShowAnswers={() => {
+                        console.log("show answers clicked");
+                    }}
                 />
                 <IonGrid id="Bells">
                     {this.indices.map(index => (

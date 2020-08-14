@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonIcon, IonLabel } from "@ionic/react";
-import { close, eye, helpCircle, play } from "ionicons/icons";
+import { close, eye, eyeOff, helpCircle, play } from "ionicons/icons";
 import React from "react";
 import Modal from "react-modal";
 import "./toolbar.css";
@@ -7,6 +7,7 @@ import "./toolbar.css";
 export interface ToolbarProps {
     instructions: string;
     onPlayAgain(): void;
+    onShowAnswers(): void;
 }
 
 export interface ToolbarState {
@@ -14,9 +15,12 @@ export interface ToolbarState {
 }
 
 export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
+    answersButton!: string;
+
     constructor(props: ToolbarProps) {
         super(props);
         this.state = { instructionsIsOpen: false };
+        this.answersButton = eye;
     }
 
     openInstructions = () => {
@@ -57,8 +61,18 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                     </IonButton>
                 </Modal>
 
-                <IonButton onClick={() => {}}>
-                    <IonIcon icon={eye} />
+                <IonButton
+                    onClick={() => {
+                        this.props.onShowAnswers();
+                        console.log(typeof this.answersButton);
+                        if (this.answersButton === eye) {
+                            this.answersButton = eyeOff;
+                        } else {
+                            this.answersButton = eye;
+                        }
+                    }}
+                >
+                    <IonIcon icon={this.answersButton} />
                     <IonLabel>Answers</IonLabel>
                 </IonButton>
             </IonButtons>
