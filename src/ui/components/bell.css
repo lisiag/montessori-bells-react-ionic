@@ -9,3 +9,7 @@
     color: blue;
     font-size: 100px;
 }
+
+.answersShow {
+    border: 5px solid green;
+}
