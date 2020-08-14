@@ -21,15 +21,11 @@ export class Bells extends React.Component<BellsProps> {
        random bell in the case of only one bell on the left, I always take the second one from the
        "notes" array, but that's ok because the elements of that array are in random order. */
     renderCell(index: number) {
-        if (this.props.numPairs != 1 || index === 1) {
+        if (this.props.numPairs !== 1 || index === 1) {
             return <Bell note={this.notes[index]} cls="left_icon" />;
         } else {
             return <IonCol></IonCol>;
         }
-    }
-
-    constructor(props: BellsProps) {
-        super(props);
     }
 
     init() {

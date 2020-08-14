@@ -138,7 +138,7 @@ export class Bell extends React.Component<BellProps> {
     }
 
     render() {
-        if (this.howl == null || this.currentNote != this.props.note) {
+        if (this.howl == null || this.currentNote !== this.props.note) {
             this.changeNote(this.props.note);
         }
 
