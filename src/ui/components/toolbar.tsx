@@ -1,5 +1,5 @@
 import { IonButton, IonButtons, IonIcon, IonLabel } from "@ionic/react";
-import { close, eye, eyeOff, helpCircle, play } from "ionicons/icons";
+import { close, bulb, helpCircle, play } from "ionicons/icons";
 import React from "react";
 import Modal from "react-modal";
 import "./toolbar.css";
@@ -7,20 +7,17 @@ import "./toolbar.css";
 export interface ToolbarProps {
     instructions: string;
     onPlayAgain(): void;
-    onShowAnswers(): void;
 }
 
 export interface ToolbarState {
     instructionsIsOpen: boolean;
+    answersShow: boolean;
 }
 
 export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
-    answersButton!: string;
-
     constructor(props: ToolbarProps) {
         super(props);
-        this.state = { instructionsIsOpen: false };
-        this.answersButton = eye;
+        this.state = { instructionsIsOpen: false, answersShow: false };
     }
 
     openInstructions = () => {
@@ -31,12 +28,21 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
         this.setState({ instructionsIsOpen: false });
     };
 
+    getAnswersLabel = (showing: boolean) => {
+        return showing ? "Hide answers" : "Show answers";
+    };
+
     render() {
+        window.document.body.classList.toggle(
+            "answersShow",
+            this.state.answersShow
+        );
         return (
             <IonButtons>
                 <IonButton
                     onClick={() => {
                         this.props.onPlayAgain();
+                        this.setState({ answersShow: false });
                     }}
                 >
                     <IonIcon icon={play} />
@@ -63,17 +69,13 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
 
                 <IonButton
                     onClick={() => {
-                        this.props.onShowAnswers();
-                        console.log(typeof this.answersButton);
-                        if (this.answersButton === eye) {
-                            this.answersButton = eyeOff;
-                        } else {
-                            this.answersButton = eye;
-                        }
+                        this.setState({ answersShow: !this.state.answersShow });
                     }}
                 >
-                    <IonIcon icon={this.answersButton} />
-                    <IonLabel>Answers</IonLabel>
+                    <IonIcon icon={bulb} />
+                    <IonLabel>
+                        {this.getAnswersLabel(this.state.answersShow)}
+                    </IonLabel>
                 </IonButton>
             </IonButtons>
         );
