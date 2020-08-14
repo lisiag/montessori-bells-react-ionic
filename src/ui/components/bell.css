@@ -10,6 +10,42 @@
     font-size: 100px;
 }
 
-.answersShow .bell {
-    border: 10px solid green;
+.bell {
+    border: 8px solid transparent;
+}
+
+.note1 {
+    border-color: red;
+}
+
+.note2 {
+    border-color: darkorange;
+}
+
+.note3 {
+    border-color: gold;
+}
+
+.note4 {
+    border-color: lightseagreen;
+}
+
+.note5 {
+    border-color: deepskyblue;
+}
+
+.note6 {
+    border-color: blue;
+}
+
+.note7 {
+    border-color: blueviolet;
+}
+
+.note0 {
+    border-color: magenta;
+}
+
+body:not(.answersShow) .bell {
+    border-color: transparent;
 }

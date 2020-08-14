@@ -158,7 +158,12 @@ export class Bell extends React.Component<BellProps> {
                         }}
                     >
                         <IonIcon
-                            className={this.props.cls + " bell"}
+                            className={
+                                this.props.cls +
+                                " note" +
+                                this.props.note.toString() +
+                                " bell"
+                            }
                             icon={notifications}
                         />
                     </Draggable>
@@ -175,7 +180,12 @@ export class Bell extends React.Component<BellProps> {
                         }}
                     >
                         <IonIcon
-                            className={this.props.cls + " rightBell bell"}
+                            className={
+                                this.props.cls +
+                                " note" +
+                                this.props.note.toString() +
+                                " rightBell bell"
+                            }
                             icon={notifications}
                         />
                     </Draggable>
