@@ -14,18 +14,18 @@ export interface ToolbarProps {
 
 export interface ToolbarState {
     instructionsIsOpen: boolean;
-    answersShow: boolean;
 }
 
 /* A toolbar of buttons relating to the activities with the bells */
 export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
+    answersShow = false;
     constructor(props: ToolbarProps) {
         super(props);
-        this.state = { instructionsIsOpen: false, answersShow: false };
+        this.state = { instructionsIsOpen: false };
         /* props.answersShow.reset() is called from Bells when the activity is refreshed to ensure
         that the answers are not showing when the activity is refreshed*/
         props.answersShow.reset = () => {
-            this.setState({ answersShow: false });
+            this.answersShow = false;
         };
     }
 
@@ -41,14 +41,16 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
         return showing ? "Hide answers" : "Show answers";
     };
 
+    toogleShowAnswers = () => {
+        this.answersShow = !this.answersShow;
+        this.forceUpdate();
+    };
+
     render() {
         /* Add the answersShow class to body so that css knows when to display and when to hide the
         coloured borders around the bells that tell users what the correct answers are for the
         activity */
-        window.document.body.classList.toggle(
-            "answersShow",
-            this.state.answersShow
-        );
+        window.document.body.classList.toggle("answersShow", this.answersShow);
         return (
             <IonButtons>
                 <IonButton
@@ -80,12 +82,12 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
 
                 <IonButton
                     onClick={() => {
-                        this.setState({ answersShow: !this.state.answersShow });
+                        this.toogleShowAnswers();
                     }}
                 >
                     <IonIcon icon={bulb} />
                     <IonLabel>
-                        {this.getAnswersLabel(this.state.answersShow)}
+                        {this.getAnswersLabel(this.answersShow)}
                     </IonLabel>
                 </IonButton>
             </IonButtons>

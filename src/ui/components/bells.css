@@ -1,3 +1,7 @@
 #Bells {
     overflow: hidden;
 }
+
+#Bells ion-col:last-child {
+    text-align: right;
+}
