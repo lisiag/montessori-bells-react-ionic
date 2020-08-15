@@ -7,6 +7,9 @@ import "./toolbar.css";
 export interface ToolbarProps {
     instructions: string;
     onPlayAgain(): void;
+    answersShow: {
+        reset(): void;
+    };
 }
 
 export interface ToolbarState {
@@ -14,10 +17,16 @@ export interface ToolbarState {
     answersShow: boolean;
 }
 
+/* A toolbar of buttons relating to the activities with the bells */
 export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
     constructor(props: ToolbarProps) {
         super(props);
         this.state = { instructionsIsOpen: false, answersShow: false };
+        /* props.answersShow.reset() is called from Bells when the activity is refreshed to ensure
+        that the answers are not showing when the activity is refreshed*/
+        props.answersShow.reset = () => {
+            this.setState({ answersShow: false });
+        };
     }
 
     openInstructions = () => {
@@ -33,6 +42,9 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
     };
 
     render() {
+        /* Add the answersShow class to body so that css knows when to display and when to hide the
+        coloured borders around the bells that tell users what the correct answers are for the
+        activity */
         window.document.body.classList.toggle(
             "answersShow",
             this.state.answersShow
@@ -42,7 +54,6 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                 <IonButton
                     onClick={() => {
                         this.props.onPlayAgain();
-                        this.setState({ answersShow: false });
                     }}
                 >
                     <IonIcon icon={play} />

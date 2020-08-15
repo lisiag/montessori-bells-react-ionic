@@ -11,10 +11,16 @@ export interface BellsProps {
     instructions: string;
 }
 
+/* An arrangement of Bell objects in a grid, with a Toolbar of instructions etc, for matching or
+sorting activities */
 export class Bells extends React.Component<BellsProps> {
     notes: Array<number> = [];
     notesSorted: Array<number> = [];
     indices: Array<number> = [];
+
+    /* We want to be able to call reset() from here (in init()) but we can't set it here so we pass
+    it inside an object to Toolbar so it can be set in Toolbar */
+    resetAnswers: { reset(): void } = { reset() {} };
 
     /* If there is only one bell on the left for the user to pair up with a bell on the right, place
        it in the second row; otherwise place a bell on the left in every row. Even though I want a
@@ -28,6 +34,9 @@ export class Bells extends React.Component<BellsProps> {
         }
     }
 
+    /* Take all the setup out of the instructor so it can be called from render() so the arrangement
+    of bells is reset with fresh bells when navigating from Home page and when "Play again" is
+    clicked in the Toolbar */
     init() {
         /*
            Get random notes for the bells in the righthand column
@@ -45,6 +54,8 @@ export class Bells extends React.Component<BellsProps> {
         for (let i = 0; i < this.notes.length; ++i) {
             this.indices.push(i);
         }
+        /* When we restart the activity with a fresh arrangement of bells, we don't want the answers showing */
+        this.resetAnswers.reset();
     }
 
     render() {
@@ -55,6 +66,7 @@ export class Bells extends React.Component<BellsProps> {
             <IonContent className="ion-padding">
                 <Toolbar
                     instructions={this.props.instructions}
+                    answersShow={this.resetAnswers}
                     onPlayAgain={() => {
                         this.init();
                         this.setState({ reload: true }); // set any property to force update
