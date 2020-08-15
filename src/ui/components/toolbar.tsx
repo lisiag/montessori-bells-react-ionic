@@ -48,8 +48,8 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
 
     render() {
         /* Add the answersShow class to body so that css knows when to display and when to hide the
-        coloured borders around the bells that tell users what the correct answers are for the
-        activity */
+           coloured borders around the bells that tell users what the correct answers are for the
+           activity */
         window.document.body.classList.toggle("answersShow", this.answersShow);
         return (
             <IonButtons>

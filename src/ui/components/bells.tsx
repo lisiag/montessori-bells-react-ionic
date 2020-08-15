@@ -19,7 +19,7 @@ export class Bells extends React.Component<BellsProps> {
     indices: Array<number> = [];
 
     /* We want to be able to call reset() from here (in init()) but we can't set it here so we pass
-    it inside an object to Toolbar so it can be set in Toolbar */
+       it inside an object to Toolbar so it can be set in Toolbar */
     resetAnswers: { reset(): void } = { reset() {} };
 
     /* If there is only one bell on the left for the user to pair up with a bell on the right, place
@@ -35,8 +35,8 @@ export class Bells extends React.Component<BellsProps> {
     }
 
     /* Take all the setup out of the instructor so it can be called from render() so the arrangement
-    of bells is reset with fresh bells when navigating from Home page and when "Play again" is
-    clicked in the Toolbar */
+       of bells is reset with fresh bells when navigating from Home page and when "Play again" is
+       clicked in the Toolbar */
     init() {
         /*
            Get random notes for the bells in the righthand column
