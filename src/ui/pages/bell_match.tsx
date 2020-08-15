@@ -1,4 +1,3 @@
-import { IonHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react";
 import React from "react";
 import { Bells } from "../components/bells";
 import "./bell_match.css";
@@ -14,18 +13,7 @@ export class BellMatch extends React.Component {
 
     render() {
         return (
-            <IonPage>
-                <IonHeader>
-                    <IonToolbar>
-                        <IonTitle>Pair the matching bells</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <Bells
-                    numPairs={1}
-                    numRows={3}
-                    instructions={this.instructions}
-                />
-            </IonPage>
+            <Bells numPairs={1} numRows={3} instructions={this.instructions} />
         );
     }
 }

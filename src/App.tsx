@@ -11,7 +11,7 @@ import {
     IonTabs
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { person, home, informationCircle } from "ionicons/icons";
+import { person, home } from "ionicons/icons";
 import login from "./ui/pages/login";
 import homepage from "./ui/pages/home";
 import about from "./ui/pages/about";
@@ -57,18 +57,14 @@ const App: React.FC = () => (
                         exact={true}
                     />
                 </IonRouterOutlet>
-                <IonTabBar slot="bottom">
-                    <IonTabButton tab="login" href="/login">
-                        <IonIcon icon={person} />
-                        <IonLabel>Log In</IonLabel>
-                    </IonTabButton>
+                <IonTabBar slot="top">
                     <IonTabButton tab="home" href="/home">
                         <IonIcon icon={home} />
                         <IonLabel>Home</IonLabel>
                     </IonTabButton>
-                    <IonTabButton tab="about" href="/about">
-                        <IonIcon icon={informationCircle} />
-                        <IonLabel>About</IonLabel>
+                    <IonTabButton tab="login" href="/login">
+                        <IonIcon icon={person} />
+                        <IonLabel>Log In</IonLabel>
                     </IonTabButton>
                 </IonTabBar>
             </IonTabs>

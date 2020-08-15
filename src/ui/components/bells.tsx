@@ -1,4 +1,12 @@
-import { IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
+import {
+    IonPage,
+    IonHeader,
+    IonCol,
+    IonContent,
+    IonGrid,
+    IonRow,
+    IonFooter
+} from "@ionic/react";
 import React from "react";
 import { Util } from "../../business/util";
 import { Bell } from "./bell";
@@ -63,28 +71,32 @@ export class Bells extends React.Component<BellsProps> {
          */
         this.init();
         return (
-            <IonContent className="ion-padding">
-                <Toolbar
-                    instructions={this.props.instructions}
-                    answersShow={this.resetAnswers}
-                    onPlayAgain={() => {
-                        this.init();
-                        this.setState({ reload: true }); // set any property to force update
-                    }}
-                />
-                <IonGrid id="Bells">
-                    {this.indices.map(index => (
-                        <IonRow key={index}>
-                            {this.renderCell(index)}
-                            <IonCol></IonCol>
-                            <Bell
-                                note={this.notesSorted[index]}
-                                cls="right_icon"
-                            />
-                        </IonRow>
-                    ))}
-                </IonGrid>
-            </IonContent>
+            <IonPage>
+                <IonContent className="ion-padding">
+                    <IonGrid id="Bells">
+                        {this.indices.map(index => (
+                            <IonRow key={index}>
+                                {this.renderCell(index)}
+                                <IonCol></IonCol>
+                                <Bell
+                                    note={this.notesSorted[index]}
+                                    cls="right_icon"
+                                />
+                            </IonRow>
+                        ))}
+                    </IonGrid>
+                </IonContent>
+                <IonFooter>
+                    <Toolbar
+                        instructions={this.props.instructions}
+                        answersShow={this.resetAnswers}
+                        onPlayAgain={() => {
+                            this.init();
+                            this.setState({ reload: true }); // set any property to force update
+                        }}
+                    />
+                </IonFooter>
+            </IonPage>
         );
     }
 }

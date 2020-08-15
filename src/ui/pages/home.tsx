@@ -3,24 +3,23 @@ import {
     IonContent,
     IonHeader,
     IonPage,
-    IonTitle,
-    IonToolbar,
+    IonIcon,
     IonList,
     IonItem,
     IonLabel
 } from "@ionic/react";
+import { informationCircle } from "ionicons/icons";
+import { Topbar } from "../components/topbar";
 import "./home.css";
 
 const homepage: React.FC = () => {
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Activities</IonTitle>
-                </IonToolbar>
+            <IonHeader className="home">
+                <Topbar title="" />
             </IonHeader>
             <IonContent className="ion-padding">
-                {/* List of Montessori Bells activities */}
+                {/* List of Montessori Bells activities plus About page */}
                 <IonList>
                     <IonItem routerLink="/bell_match">
                         <IonLabel>Match bell</IonLabel>
@@ -42,6 +41,10 @@ const homepage: React.FC = () => {
                     </IonItem>
                     <IonItem>
                         <IonLabel>Make music</IonLabel>
+                    </IonItem>
+                    <IonItem routerLink="/about">
+                        <IonIcon icon={informationCircle} />
+                        <IonLabel class="aboutLabel">About</IonLabel>
                     </IonItem>
                 </IonList>
             </IonContent>
