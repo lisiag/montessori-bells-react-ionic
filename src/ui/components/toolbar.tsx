@@ -52,20 +52,20 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
            activity */
         window.document.body.classList.toggle("answersShow", this.answersShow);
         return (
-            <IonToolbar>
-                <IonButton
+            <div id="bellToolbar">
+                <button
                     onClick={() => {
                         this.props.onPlayAgain();
                     }}
                 >
                     <IonIcon icon={play} />
                     <IonLabel>Play again</IonLabel>
-                </IonButton>
+                </button>
 
-                <IonButton onClick={this.openInstructions}>
+                <button onClick={this.openInstructions}>
                     <IonIcon icon={helpCircle} />
                     <IonLabel>Instructions</IonLabel>
-                </IonButton>
+                </button>
 
                 <Modal
                     isOpen={this.state.instructionsIsOpen}
@@ -80,7 +80,7 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                     </IonButton>
                 </Modal>
 
-                <IonButton
+                <button
                     onClick={() => {
                         this.toogleShowAnswers();
                     }}
@@ -89,8 +89,8 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                     <IonLabel>
                         {this.getAnswersLabel(this.answersShow)}
                     </IonLabel>
-                </IonButton>
-            </IonToolbar>
+                </button>
+            </div>
         );
     }
 }

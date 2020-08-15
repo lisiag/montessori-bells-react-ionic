@@ -1,0 +1,20 @@
+#bellToolbar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+#bellToolbar button {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    color: rgb(102, 102, 102);
+    font-weight: 100;
+    background: none;
+    padding: 10px;
+    outline-color: rgba(0,0,0,.1);
+}
+
+#bellToolbar button ion-icon {
+    font-size: 24px;
+}
