@@ -12,6 +12,7 @@ import { Util } from "../../business/util";
 import { Bell } from "./bell";
 import "./bells.css";
 import { Toolbar } from "./toolbar";
+import { Topbar } from "../components/topbar";
 
 export interface BellsProps {
     numPairs: number /* the number of pairs of bells for user to match; i.e. the number of bells in the lefthand col */;
@@ -20,7 +21,7 @@ export interface BellsProps {
 }
 
 /* An arrangement of Bell objects in a grid, with a Toolbar of instructions etc, for matching or
-sorting activities */
+   sorting activities */
 export class Bells extends React.Component<BellsProps> {
     notes: Array<number> = [];
     notesSorted: Array<number> = [];
@@ -72,6 +73,9 @@ export class Bells extends React.Component<BellsProps> {
         this.init();
         return (
             <IonPage>
+                <IonHeader>
+                    <Topbar title="Pair the matching bells" />
+                </IonHeader>
                 <IonContent className="ion-padding">
                     <IonGrid id="Bells">
                         {this.indices.map(index => (

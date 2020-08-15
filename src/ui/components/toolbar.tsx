@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonIcon, IonLabel } from "@ionic/react";
+import { IonToolbar, IonButton, IonIcon, IonLabel } from "@ionic/react";
 import { close, bulb, helpCircle, play } from "ionicons/icons";
 import React from "react";
 import Modal from "react-modal";
@@ -52,7 +52,7 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
            activity */
         window.document.body.classList.toggle("answersShow", this.answersShow);
         return (
-            <IonButtons>
+            <IonToolbar>
                 <IonButton
                     onClick={() => {
                         this.props.onPlayAgain();
@@ -90,7 +90,7 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                         {this.getAnswersLabel(this.answersShow)}
                     </IonLabel>
                 </IonButton>
-            </IonButtons>
+            </IonToolbar>
         );
     }
 }

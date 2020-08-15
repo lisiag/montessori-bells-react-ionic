@@ -15,6 +15,7 @@ import "./home.css";
 const homepage: React.FC = () => {
     return (
         <IonPage>
+            {/* use class "home" so css knows to highlight the home icon */}
             <IonHeader className="home">
                 <Topbar title="" />
             </IonHeader>
