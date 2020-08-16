@@ -19,7 +19,6 @@ export class Notes {
             "blueviolet",
             "magenta"
         ];
-        const extraColors = ["limegreen", "dodgerblue"];
 
         for (let i = 0; i < noteNames.length; ++i) {
             let soundLocation =

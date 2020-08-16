@@ -1,4 +1,4 @@
-import { IonToolbar, IonButton, IonIcon, IonLabel } from "@ionic/react";
+import { IonButton, IonIcon, IonLabel } from "@ionic/react";
 import { close, bulb, helpCircle, play } from "ionicons/icons";
 import React from "react";
 import Modal from "react-modal";

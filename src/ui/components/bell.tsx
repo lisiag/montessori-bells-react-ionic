@@ -1,10 +1,9 @@
-import { IonCol, IonIcon } from "@ionic/react";
-import { notifications } from "ionicons/icons";
+import { IonCol } from "@ionic/react";
+import { Howl } from "howler";
 import React from "react";
 import Draggable, { DraggableData } from "react-draggable";
-import { Howl } from "howler";
-import "./bell.css";
 import { Util } from "../../business/util";
+import "./bell.css";
 
 export interface BellProps {
     note: number;
