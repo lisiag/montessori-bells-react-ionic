@@ -1,10 +1,11 @@
-#bellToolbar {
+#topbar {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    align-items: center;
 }
 
-#bellToolbar button {
+#topbar a {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -14,8 +15,15 @@
     padding: 10px;
     /* No outline to indicate the last clicked button */
     outline-color: rgba(0,0,0,0);
+    text-decoration: none;
+    font-size: 12px;
 }
 
-#bellToolbar button ion-icon {
+#topbar a ion-icon {
     font-size: 22px;
+}
+
+#topbar .title {
+    font-size: 20px;
+    color: #3880ff;
 }

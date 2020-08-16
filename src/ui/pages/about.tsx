@@ -7,15 +7,14 @@ import {
     IonToolbar,
     IonText
 } from "@ionic/react";
+import { Topbar } from "../components/topbar";
 import "./about.css";
 
 const about: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonTitle>About</IonTitle>
-                </IonToolbar>
+                <Topbar title="About" />
             </IonHeader>
             <IonContent>
                 <IonHeader collapse="condense">

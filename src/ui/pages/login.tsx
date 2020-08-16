@@ -7,15 +7,14 @@ import {
     IonToolbar
 } from "@ionic/react";
 import ExploreContainer from "../components/ExploreContainer";
+import { Topbar } from "../components/topbar";
 import "./login.css";
 
 const login: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Log In</IonTitle>
-                </IonToolbar>
+                <Topbar title="" />
             </IonHeader>
             <IonContent>
                 <IonHeader collapse="condense">
