@@ -12,7 +12,8 @@
     font-weight: 100;
     background: none;
     padding: 10px;
-    outline-color: rgba(0,0,0,.1);
+    /* No outline to indicate the last clicked button */
+    outline-color: rgba(0,0,0,0);
 }
 
 #bellToolbar button ion-icon {
