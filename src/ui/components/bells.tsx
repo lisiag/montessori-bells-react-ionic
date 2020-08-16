@@ -7,7 +7,7 @@ import {
     IonRow,
     IonFooter
 } from "@ionic/react";
-import React from "react";
+import React, { DetailedReactHTMLElement, HTMLAttributes } from "react";
 import { Util } from "../../business/util";
 import { Bell } from "./bell";
 import "./bells.css";
@@ -17,7 +17,10 @@ import { Topbar } from "../components/topbar";
 export interface BellsProps {
     numPairs: number /* the number of pairs of bells for user to match; i.e. the number of bells in the lefthand col */;
     numRows: number /* the number of rows of bells; the number of bells in the righthand column */;
-    instructions: string;
+    instructions: DetailedReactHTMLElement<
+        HTMLAttributes<HTMLElement>,
+        HTMLElement
+    >;
 }
 
 /* An arrangement of Bell objects in a grid, with a Toolbar of instructions etc, for matching or

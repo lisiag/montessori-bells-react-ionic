@@ -1,11 +1,14 @@
-import { IonButton, IonIcon, IonLabel } from "@ionic/react";
-import { close, bulb, helpCircle, play } from "ionicons/icons";
-import React from "react";
+import { IonIcon, IonLabel } from "@ionic/react";
+import { bulb, close, helpCircle, play } from "ionicons/icons";
+import React, { DetailedReactHTMLElement, HTMLAttributes } from "react";
 import Modal from "react-modal";
 import "./toolbar.css";
 
 export interface ToolbarProps {
-    instructions: string;
+    instructions: DetailedReactHTMLElement<
+        HTMLAttributes<HTMLElement>,
+        HTMLElement
+    >;
     onPlayAgain(): void;
     answersShow: {
         reset(): void;
@@ -23,7 +26,7 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
         super(props);
         this.state = { instructionsIsOpen: false };
         /* props.answersShow.reset() is called from Bells when the activity is refreshed to ensure
-        that the answers are not showing when the activity is refreshed*/
+           that the answers are not showing when the activity is refreshed*/
         props.answersShow.reset = () => {
             this.answersShow = false;
         };
@@ -72,12 +75,12 @@ export class Toolbar extends React.Component<ToolbarProps, ToolbarState> {
                     onRequestClose={this.closeInstructions}
                     shouldCloseOnOverlayClick={true}
                 >
-                    <div onClick={this.closeInstructions}>
+                    <button id="closeModal" onClick={this.closeInstructions}>
+                        <IonIcon icon={close}></IonIcon>
+                    </button>
+                    <div id="instructions" onClick={this.closeInstructions}>
                         {this.props.instructions}
                     </div>
-                    <IonButton onClick={this.closeInstructions}>
-                        <IonIcon icon={close}></IonIcon>
-                    </IonButton>
                 </Modal>
 
                 <button
