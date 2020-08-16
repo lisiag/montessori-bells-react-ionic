@@ -1,51 +1,50 @@
-.left_icon {
-    color: orange;
-    font-size: 100px;
+/* Note: the color gradient of the bells is handled in the svg component in bell.tsx */
+
+.draggableBell {
     position: absolute;
     z-index: 10;
 }
 
-.right_icon {
-    color: blue;
-    font-size: 100px;
-}
-
-.bell {
-    border: 8px solid transparent;
-}
-
 .note1 {
-    border-color: red;
+    --bell-color: red;
 }
 
 .note2 {
-    border-color: darkorange;
+    --bell-color: darkorange;
 }
 
 .note3 {
-    border-color: gold;
+    --bell-color: gold;
 }
 
 .note4 {
-    border-color: lightseagreen;
+    --bell-color: lightseagreen;
 }
 
 .note5 {
-    border-color: deepskyblue;
+    --bell-color: deepskyblue;
 }
 
 .note6 {
-    border-color: blue;
+    --bell-color: blue;
 }
 
 .note7 {
-    border-color: blueviolet;
+    --bell-color: blueviolet;
 }
 
 .note0 {
-    border-color: magenta;
+    --bell-color: magenta;
 }
 
-body:not(.answersShow) .bell {
-    border-color: transparent;
+svg {
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow( 5px 5px 3px rgba(0, 0, 0, .5));
+}
+
+body.answersShow svg path {
+    /* The stroke property in css is for adding a border to svg shapes */
+    stroke-width: 30px;
+    stroke: var(--bell-color);
 }

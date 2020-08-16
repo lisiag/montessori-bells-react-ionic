@@ -108,13 +108,13 @@ export class Bell extends React.Component<BellProps> {
         let { x, y } = ui;
         const grid = ui.node.closest("ion-grid")!;
         /* get all the bells in the right column */
-        const rightBells = grid.getElementsByClassName("rightBell");
+        const fixedBells = grid.getElementsByClassName("fixedBell");
 
         /* find which of the bells in the right column is closest */
-        let closestBound = rightBells[0].getBoundingClientRect();
+        let closestBound = fixedBells[0].getBoundingClientRect();
         let minVertDiff = Math.abs(bound.top - closestBound.top);
-        for (let i = 1; i < rightBells.length; ++i) {
-            const rBellBound = rightBells[i].getBoundingClientRect();
+        for (let i = 1; i < fixedBells.length; ++i) {
+            const rBellBound = fixedBells[i].getBoundingClientRect();
             const vertDiff = Math.abs(bound.top - rBellBound.top);
             if (vertDiff < minVertDiff) {
                 minVertDiff = vertDiff;
@@ -137,6 +137,37 @@ export class Bell extends React.Component<BellProps> {
         return { x, y };
     }
 
+    bellSvg(type: string) {
+        const id = type;
+        let color1 = "#1e90ff";
+        let color2 = "#1e50af";
+        if (type === "draggableBell") {
+            color1 = "#42dd42";
+            color2 = "#329d32";
+        }
+        return (
+            <div className={`${type} note${this.props.note}`}>
+                {/* This is the svg that Ionic uses for its "notifications" icon.
+                I use it as an svg not IonIcon so that I can modify it with css.
+                Shadow root seems to prevent that if I use IonIcon here. */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    /* Define the colour gradient that gives the bells a nice
+                    appearance and a sort of 3D feel. */
+                    <defs>
+                        <linearGradient id={id}>
+                            <stop offset="5%" stopColor={color1} />
+                            <stop offset="95%" stopColor={color2} />
+                        </linearGradient>
+                    </defs>
+                    <path
+                        fill={`url(#${id})`}
+                        d="M440.08 341.31c-1.66-2-3.29-4-4.89-5.93-22-26.61-35.31-42.67-35.31-118 0-39-9.33-71-27.72-95-13.56-17.73-31.89-31.18-56.05-41.12a3 3 0 01-.82-.67C306.6 51.49 282.82 32 256 32s-50.59 19.49-59.28 48.56a3.13 3.13 0 01-.81.65c-56.38 23.21-83.78 67.74-83.78 136.14 0 75.36-13.29 91.42-35.31 118-1.6 1.93-3.23 3.89-4.89 5.93a35.16 35.16 0 00-4.65 37.62c6.17 13 19.32 21.07 34.33 21.07H410.5c14.94 0 28-8.06 34.19-21a35.17 35.17 0 00-4.61-37.66zM256 480a80.06 80.06 0 0070.44-42.13 4 4 0 00-3.54-5.87H189.12a4 4 0 00-3.55 5.87A80.06 80.06 0 00256 480z"
+                    ></path>
+                </svg>
+            </div>
+        );
+    }
+
     render() {
         if (this.howl == null || this.currentNote !== this.props.note) {
             this.changeNote(this.props.note);
@@ -157,15 +188,7 @@ export class Bell extends React.Component<BellProps> {
                             this.onStop(ui);
                         }}
                     >
-                        <IonIcon
-                            className={
-                                this.props.cls +
-                                " note" +
-                                this.props.note.toString() +
-                                " bell"
-                            }
-                            icon={notifications}
-                        />
+                        {this.bellSvg("draggableBell")}
                     </Draggable>
                 </IonCol>
             );
@@ -179,15 +202,7 @@ export class Bell extends React.Component<BellProps> {
                             return false;
                         }}
                     >
-                        <IonIcon
-                            className={
-                                this.props.cls +
-                                " note" +
-                                this.props.note.toString() +
-                                " rightBell bell"
-                            }
-                            icon={notifications}
-                        />
+                        {this.bellSvg("fixedBell")}
                     </Draggable>
                 </IonCol>
             );

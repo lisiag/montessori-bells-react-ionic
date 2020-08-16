@@ -1,4 +1,5 @@
 #Bells {
+    /* this prevents scrolling when the bell is dragged off screen */
     overflow: hidden;
 }
 
