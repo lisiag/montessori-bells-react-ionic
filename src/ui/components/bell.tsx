@@ -173,8 +173,8 @@ export class Bell extends React.Component<BellProps> {
             this.changeNote(this.props.note);
         }
 
-        if (this.props.cls === "left_icon") {
-            // create a bell in the left column that can be dragged around the screen
+        if (this.props.cls === "draggable") {
+            // create a draggable bell in the left column - that can be dragged around the screen
             return (
                 <IonCol>
                     <Draggable
@@ -193,7 +193,7 @@ export class Bell extends React.Component<BellProps> {
                 </IonCol>
             );
         } else {
-            // create a bell in the right column that cannot be dragged around the screen
+            // create a fixed bell in the right column - that cannot be dragged around the screen
             return (
                 <IonCol>
                     <Draggable

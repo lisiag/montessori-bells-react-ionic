@@ -37,7 +37,7 @@ export class Bells extends React.Component<BellsProps> {
        "notes" array, but that's ok because the elements of that array are in random order. */
     renderCell(index: number) {
         if (this.props.numPairs !== 1 || index === 1) {
-            return <Bell note={this.notes[index]} cls="left_icon" />;
+            return <Bell note={this.notes[index]} cls="draggable" />;
         } else {
             return <IonCol></IonCol>;
         }
@@ -84,7 +84,7 @@ export class Bells extends React.Component<BellsProps> {
                                 <IonCol></IonCol>
                                 <Bell
                                     note={this.notesSorted[index]}
-                                    cls="right_icon"
+                                    cls="fixed"
                                 />
                             </IonRow>
                         ))}
