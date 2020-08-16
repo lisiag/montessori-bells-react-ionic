@@ -125,7 +125,7 @@ export class Bell extends React.Component<BellProps> {
         const vertDiff = bound.top - closestBound.top;
         const horizDiff = bound.left - closestBound.left;
         const gridBoundRight = grid.getBoundingClientRect().right;
-        if (Math.abs(vertDiff) < 20 && Math.abs(horizDiff) < 100) {
+        if (Math.abs(vertDiff) < 40 && Math.abs(horizDiff) < 150) {
             /* Bell is close to closest, so adjust bell's x and y such that it aligns vertically with closest and sits immediately left of it */
             x = gridBoundRight - RIGHT_BOUND_FACTOR * bound.width;
             y = ui.y - vertDiff;
