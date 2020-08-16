@@ -147,9 +147,11 @@ export class Bell extends React.Component<BellProps> {
         }
         return (
             <div className={`${type} note${this.props.note}`}>
-                {/* This is the svg that Ionic uses for its "notifications" icon.
-                I use it as an svg not IonIcon so that I can modify it with css.
-                Shadow root seems to prevent that if I use IonIcon here. */}
+                {/* This is the svg that Ionic uses for its "notifications" icon. There are many
+                other bell images available online. I like this one because it is clear and simple.
+                I use the svg directly rather than through IonIcon so that I can modify its
+                appearance with a gradient of color and a shadow border.  Shadow root seems to
+                prevent that if I use IonIcon here. */}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     /* Define the colour gradient that gives the bells a nice
                     appearance and a sort of 3D feel. */
