@@ -37,7 +37,14 @@ const App: React.FC = () => (
                 <Route path="/login" component={login} exact={true} />
                 <Route path="/home" component={homepage} exact={true} />
                 <Route path="/about" component={about} exact={true} />
-                <Route path="/bell_match" component={BellMatch} exact={true} />
+                {/* Add routes to multiple pages from one file. See second answer:
+                https://stackoverflow.com/questions/35352638/react-how-to-get-parameter-value-from-query-string
+                */}
+                <Route
+                    path="/bell_match/:level"
+                    component={BellMatch}
+                    exact={true}
+                />
             </IonRouterOutlet>
         </IonReactRouter>
     </IonApp>

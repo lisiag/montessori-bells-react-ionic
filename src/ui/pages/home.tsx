@@ -22,13 +22,13 @@ const homepage: React.FC = () => {
             <IonContent className="ion-padding">
                 {/* List of Montessori Bells activities plus About page */}
                 <IonList>
-                    <IonItem routerLink="/bell_match">
+                    <IonItem routerLink="/bell_match/1">
                         <IonLabel>Match bell</IonLabel>
                     </IonItem>
-                    <IonItem>
+                    <IonItem routerLink="/bell_match/3">
                         <IonLabel>Match bells: 3</IonLabel>
                     </IonItem>
-                    <IonItem>
+                    <IonItem routerLink="/bell_match/8">
                         <IonLabel>Match bells: octave</IonLabel>
                     </IonItem>
                     <IonItem>
