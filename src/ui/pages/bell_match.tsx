@@ -15,12 +15,21 @@ export class BellMatch extends React.Component {
         HTMLAttributes<HTMLElement>,
         HTMLElement
     >;
+    numRows: number;
 
     constructor(props: any) {
         super(props);
+        this.title = "Pair the matching bells";
         /* Cast to number so can use in switch case */
         this.level = Number(props.match.params.level);
-        this.title = "Pair the matching bells";
+        switch (this.level) {
+            case 1:
+            case 3:
+                this.numRows = 3;
+                break;
+            default:
+                this.numRows = 8;
+        }
 
         let sing_plural;
         if (this.level === 1) {
@@ -40,37 +49,14 @@ export class BellMatch extends React.Component {
     }
 
     render() {
-        if (this.level === 1) {
-            return (
-                <Bells
-                    type="match"
-                    numPairs={1}
-                    numRows={3}
-                    instructions={this.instructions}
-                    title={this.title}
-                />
-            );
-        } else if (this.level === 3) {
-            return (
-                <Bells
-                    type="match"
-                    numPairs={3}
-                    numRows={3}
-                    instructions={this.instructions}
-                    title={this.title}
-                />
-            );
-        } else {
-            /* octave */
-            return (
-                <Bells
-                    type="match"
-                    numPairs={8}
-                    numRows={8}
-                    instructions={this.instructions}
-                    title={this.title}
-                />
-            );
-        }
+        return (
+            <Bells
+                type="match"
+                numPairs={this.level}
+                numRows={this.numRows}
+                instructions={this.instructions}
+                title={this.title}
+            />
+        );
     }
 }
