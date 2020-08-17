@@ -20,6 +20,7 @@ import { Redirect, Route } from "react-router-dom";
 import "./theme/variables.css";
 import about from "./ui/pages/about";
 import { BellMatch } from "./ui/pages/bell_match";
+import { MakeMusic } from "./ui/pages/make_music";
 import homepage from "./ui/pages/home";
 import login from "./ui/pages/login";
 
@@ -38,13 +39,14 @@ const App: React.FC = () => (
                 <Route path="/home" component={homepage} exact={true} />
                 <Route path="/about" component={about} exact={true} />
                 {/* Add routes to multiple pages from one file. See second answer:
-                https://stackoverflow.com/questions/35352638/react-how-to-get-parameter-value-from-query-string
-                */}
+              https://stackoverflow.com/questions/35352638/react-how-to-get-parameter-value-from-query-string
+            */}
                 <Route
                     path="/bell_match/:level"
                     component={BellMatch}
                     exact={true}
                 />
+                <Route path="/make_music" component={MakeMusic} exact={true} />
             </IonRouterOutlet>
         </IonReactRouter>
     </IonApp>

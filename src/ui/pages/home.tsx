@@ -40,7 +40,7 @@ const homepage: React.FC = () => {
                     <IonItem>
                         <IonLabel>Sort bells: octave</IonLabel>
                     </IonItem>
-                    <IonItem>
+                    <IonItem routerLink="/make_music">
                         <IonLabel>Make music</IonLabel>
                     </IonItem>
                     <IonItem routerLink="/about">

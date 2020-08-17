@@ -5,6 +5,7 @@ import "./bell_match.css";
 /* The page for matching one pair of bells activity */
 export class BellMatch extends React.Component {
     level: number;
+    title: string;
     /* I initially tried saying instructions was type HTMLElement but that caused an error
     "DetailedReactHTMLElement ...". Hence I made instructions a DetailedReactHTMLElement and jumped
     into that to find what to say for its type parameters. I guess instructions is not a plain
@@ -19,6 +20,7 @@ export class BellMatch extends React.Component {
         super(props);
         /* Cast to number so can use in switch case */
         this.level = Number(props.match.params.level);
+        this.title = "Pair the matching bells";
 
         let sing_plural;
         if (this.level === 1) {
@@ -41,26 +43,32 @@ export class BellMatch extends React.Component {
         if (this.level === 1) {
             return (
                 <Bells
+                    type="match"
                     numPairs={1}
                     numRows={3}
                     instructions={this.instructions}
+                    title={this.title}
                 />
             );
         } else if (this.level === 3) {
             return (
                 <Bells
+                    type="match"
                     numPairs={3}
                     numRows={3}
                     instructions={this.instructions}
+                    title={this.title}
                 />
             );
         } else {
             /* octave */
             return (
                 <Bells
+                    type="match"
                     numPairs={8}
                     numRows={8}
                     instructions={this.instructions}
+                    title={this.title}
                 />
             );
         }
