@@ -1,31 +1,41 @@
-import React from "react";
 import {
     IonContent,
     IonHeader,
     IonPage,
-    IonTitle,
-    IonToolbar
+    IonInput,
+    IonButton
 } from "@ionic/react";
-import ExploreContainer from "../components/ExploreContainer";
+import React, { useState } from "react";
 import { Topbar } from "../components/topbar";
 import "./login.css";
 
-const login: React.FC = () => {
+const Login: React.FC = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+
+    let registerUser = () => {
+        console.log(username, password);
+    };
+
     return (
         <IonPage>
             <IonHeader>
                 <Topbar title="" />
             </IonHeader>
-            <IonContent>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Log In</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <ExploreContainer name="Login page" />
+            <IonContent className="ion-padding">
+                <IonInput
+                    placeholder="username"
+                    onIonChange={(e: any) => setUsername(e.target.value)}
+                />
+                <IonInput
+                    type="password"
+                    placeholder="password"
+                    onIonChange={(e: any) => setPassword(e.target.value)}
+                />
+                <IonButton onClick={registerUser}>Register</IonButton>
             </IonContent>
         </IonPage>
     );
 };
 
-export default login;
+export default Login;
