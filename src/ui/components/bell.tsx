@@ -11,9 +11,8 @@ export interface BellProps {
 }
 
 const LEFT_BOUND = 10;
-const TOP_BOUND = 152;
+const TOP_BOUND = 7;
 const RIGHT_BOUND_FACTOR = 2.12;
-const BOTTOM_BOUND_FACTOR = 0.98;
 
 export class Bell extends React.Component<BellProps> {
     /* Definite assignment assertion so howl can be initialized in a function separate from constructor */
@@ -89,11 +88,14 @@ export class Bell extends React.Component<BellProps> {
             /* If bell is off screen to the left, snap bell back just inside screen */
             x = -LEFT_BOUND;
         }
-        /* If bell is off screen to the top or bottom, snap bell back just inside screen */
-        if (bound.top < gridBound.top) {
-            y = -TOP_BOUND;
-        } else if (bound.bottom > gridBound.bottom) {
-            y += gridBound.bottom - BOTTOM_BOUND_FACTOR * bound.bottom;
+        /* If y has not been modified by positionBellRight() above, check whether bell is off screen
+        to the top or bottom and snap bell back just inside screen */
+        if (y === ui.y) {
+            if (bound.top < gridBound.top) {
+                y += gridBound.top - bound.top - TOP_BOUND;
+            } else if (bound.bottom > gridBound.bottom) {
+                y += gridBound.bottom - bound.bottom;
+            }
         }
 
         return { x, y };
@@ -128,7 +130,7 @@ export class Bell extends React.Component<BellProps> {
         if (Math.abs(vertDiff) < 40 && Math.abs(horizDiff) < 150) {
             /* Bell is close to closest, so adjust bell's x and y such that it aligns vertically with closest and sits immediately left of it */
             x = gridBoundRight - RIGHT_BOUND_FACTOR * bound.width;
-            y = ui.y - vertDiff;
+            y = y - vertDiff;
         } else if (bound.right > gridBoundRight - 0.9 * bound.width) {
             /* Bell is overlapping or beyond the righthand bells, so adjust bell's x so it is to the left of the righthand bells */
             x = gridBoundRight - RIGHT_BOUND_FACTOR * bound.width;
