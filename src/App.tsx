@@ -22,7 +22,8 @@ import about from "./ui/pages/about";
 import { BellMatch } from "./ui/pages/bell_match";
 import { MakeMusic } from "./ui/pages/make_music";
 import homepage from "./ui/pages/home";
-import login from "./ui/pages/login";
+import Login from "./ui/pages/login";
+import Register from "./ui/pages/register";
 
 Modal.setAppElement("body");
 
@@ -35,7 +36,8 @@ const App: React.FC = () => (
                     render={() => <Redirect to="/home" />}
                     exact={true}
                 />
-                <Route path="/login" component={login} exact={true} />
+                <Route path="/login" component={Login} exact={true} />
+                <Route path="/register" component={Register} exact={true} />
                 <Route path="/home" component={homepage} exact={true} />
                 <Route path="/about" component={about} exact={true} />
                 {/* Add routes to multiple pages from one file. See second answer:

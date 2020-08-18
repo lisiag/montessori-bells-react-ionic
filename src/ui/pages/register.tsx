@@ -1,29 +1,37 @@
 import {
+    IonButton,
     IonContent,
     IonHeader,
-    IonPage,
     IonInput,
-    IonButton
+    IonPage
 } from "@ionic/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Topbar } from "../components/topbar";
-import { loginUser } from "../../firebaseConfig";
-import "./login.css";
+import { registerUser } from "../../firebaseConfig";
+import { toast } from "../components/toast";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [cpassword, setCPassword] = useState("");
 
-    async function login() {
-        await loginUser(email, password);
+    async function register() {
+        // validation
+        if (password !== cpassword) {
+            toast("Passwords do not match");
+        }
+        if (email.trim() === "" || password.trim() === "") {
+            toast("Email and password are required");
+        }
+        await registerUser(email, password);
     }
 
     return (
         <IonPage>
             <IonHeader>
-                <Topbar title="Log in" />
+                <Topbar title="Register" />
             </IonHeader>
             <IonContent className="ion-padding">
                 <IonInput
@@ -40,13 +48,18 @@ const Login: React.FC = () => {
                     placeholder="password"
                     onIonChange={(e: any) => setPassword(e.target.value)}
                 />
-                <IonButton onClick={login}>Log in</IonButton>
+                <IonInput
+                    type="password"
+                    placeholder="cofirm password"
+                    onIonChange={(e: any) => setCPassword(e.target.value)}
+                />
+                <IonButton onClick={register}>Register</IonButton>
                 <p>
-                    Don't have an account? <Link to="/register">Register</Link>
+                    Already have an account? <Link to="/login">Log in</Link>
                 </p>
             </IonContent>
         </IonPage>
     );
 };
 
-export default Login;
+export default Register;
