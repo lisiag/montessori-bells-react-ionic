@@ -1,6 +1,7 @@
 import { IonIcon, IonLabel } from "@ionic/react";
 import { home, person } from "ionicons/icons";
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
     onAuthStateChanged,
     getCurrentUser,
@@ -37,10 +38,14 @@ export class Topbar extends React.Component<
             );
         } else {
             return (
-                <a className="button" href="/login">
+                <NavLink
+                    className="button"
+                    activeClassName="selected"
+                    to="/login"
+                >
                     <IonIcon icon={person} />
                     <IonLabel>Log In</IonLabel>
-                </a>
+                </NavLink>
             );
         }
     }
@@ -48,10 +53,14 @@ export class Topbar extends React.Component<
     render() {
         return (
             <div id="topbar">
-                <a className="button" href="/home">
+                <NavLink
+                    className="button"
+                    activeClassName="selected"
+                    to="/home"
+                >
                     <IonIcon icon={home} />
                     <IonLabel>Home</IonLabel>
-                </a>
+                </NavLink>
                 <IonLabel className="title">{this.props.title}</IonLabel>
                 {this.loginProfile()}
             </div>
