@@ -17,7 +17,7 @@ const homepage: React.FC = () => {
         <IonPage>
             {/* use class "home" so css knows to highlight the home icon */}
             <IonHeader className="home">
-                <Topbar title="" />
+                <Topbar title="Home" />
             </IonHeader>
             <IonContent className="ion-padding">
                 {/* List of Montessori Bells activities plus About page */}
