@@ -8,16 +8,15 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Topbar } from "../components/topbar";
-import { loginUser } from "../../firebaseConfig";
+import { loginUser } from "../../business/user";
 import "./login.css";
 
 const Login: React.FC = () => {
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     async function login() {
-        await loginUser(username, email, password);
+        await loginUser(email, password);
     }
 
     return (

@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Topbar } from "../components/topbar";
-import { registerUser } from "../../firebaseConfig";
+import { registerUser } from "../../business/user";
 import { toast } from "../components/toast";
 
 const Register: React.FC = () => {
