@@ -14,24 +14,49 @@ const config = {
 
 firebase.initializeApp(config);
 
-export async function loginUser(email: string, password: string, message = "") {
+export const db = firebase.firestore();
+
+export async function registerUser(
+    username: string,
+    email: string,
+    password: string
+) {
     try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
-        toast(message + "You are logged in :)");
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+        loginUser(
+            username,
+            email,
+            password,
+            "You have registered successfully :)\n"
+        );
+        // Add user to database so can display their name/profile-pic on each page and can save music recordings they make
+        db.collection("users")
+            .add({
+                name: username
+            })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            });
+
         return true;
-    } catch (loginError) {
-        toast(loginError.message);
+    } catch (registerError) {
+        toast(registerError.message);
         return false;
     }
 }
 
-export async function registerUser(email: string, password: string) {
+export async function loginUser(
+    username: string,
+    email: string,
+    password: string,
+    message = ""
+) {
     try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
-        loginUser(email, password, "You have registered successfully :)\n");
+        await firebase.auth().signInWithEmailAndPassword(email, password);
+        toast(`${message}Welcome ${username}! You are logged in :)`);
         return true;
-    } catch (registerError) {
-        toast(registerError.message);
+    } catch (loginError) {
+        toast(loginError.message);
         return false;
     }
 }

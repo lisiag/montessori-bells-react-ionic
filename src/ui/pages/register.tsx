@@ -22,10 +22,15 @@ const Register: React.FC = () => {
         if (password !== cpassword) {
             toast("Passwords do not match");
         }
-        if (email.trim() === "" || password.trim() === "") {
-            toast("Email and password are required");
+        if (
+            username.trim() === "" ||
+            email.trim() === "" ||
+            password.trim() === ""
+        ) {
+            toast("Username, email and password are required");
+        } else {
+            await registerUser(username, email, password);
         }
-        await registerUser(email, password);
     }
 
     return (

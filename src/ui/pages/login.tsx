@@ -17,7 +17,7 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState("");
 
     async function login() {
-        await loginUser(email, password);
+        await loginUser(username, email, password);
     }
 
     return (
@@ -26,10 +26,6 @@ const Login: React.FC = () => {
                 <Topbar title="Log in" />
             </IonHeader>
             <IonContent className="ion-padding">
-                <IonInput
-                    placeholder="username"
-                    onIonChange={(e: any) => setUsername(e.target.value)}
-                />
                 <IonInput
                     type="email"
                     placeholder="email"
