@@ -1,27 +1,37 @@
 import React, { DetailedReactHTMLElement, HTMLAttributes } from "react";
+import { match } from "react-router";
 import { Bells } from "../components/bells";
 import "./bell_match.css";
 
+export interface BellMatchProps {
+    /* Record is a simple typescript type. match is a React router object */
+    match: match<Record<string, string | undefined>>;
+}
+
 /* The page for matching one pair of bells activity */
-export class BellMatch extends React.Component {
-    level: number;
+export class BellMatch extends React.Component<BellMatchProps> {
+    level!: number;
     title: string;
     /* I initially tried saying instructions was type HTMLElement but that caused an error
     "DetailedReactHTMLElement ...". Hence I made instructions a DetailedReactHTMLElement and jumped
     into that to find what to say for its type parameters. I guess instructions is not a plain
     HTMLElement because it is a nested composite html element. Anyway, DetailedReactHTMLElement
     achieves the desired result: instructions message with two words in diff colours. */
-    instructions: DetailedReactHTMLElement<
+    instructions!: DetailedReactHTMLElement<
         HTMLAttributes<HTMLElement>,
         HTMLElement
     >;
-    numRows: number;
+    numRows!: number;
 
-    constructor(props: any) {
+    constructor(props: BellMatchProps) {
         super(props);
         this.title = "Pair the matching bells";
+        this.init();
+    }
+
+    init() {
         /* Cast to number so can use in switch case */
-        this.level = Number(props.match.params.level);
+        this.level = Number(this.props.match.params.level);
         switch (this.level) {
             case 1:
             case 3:
@@ -49,6 +59,7 @@ export class BellMatch extends React.Component {
     }
 
     render() {
+        this.init();
         return (
             <Bells
                 type="match"
