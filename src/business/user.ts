@@ -88,7 +88,9 @@ export async function loginUser(email: string, password: string, message = "") {
 
         const docRef = db.collection("bellUsers").doc(email!);
         const doc = await docRef.get();
-
+        // The following is duplicated from onAuthStateChanged but attempts to get the welcome
+        // message and username to display correctly if the code was extracted into a separate
+        // function have not yet succeeded
         if (doc.exists) {
             currentUser = {
                 username: doc.data()!.username,

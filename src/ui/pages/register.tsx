@@ -58,7 +58,9 @@ const Register: React.FC = () => {
                     placeholder="cofirm password"
                     onIonChange={(e: any) => setCPassword(e.target.value)}
                 />
-                <IonButton onClick={register}>Register</IonButton>
+                <Link to="/home">
+                    <IonButton onClick={register}>Register</IonButton>
+                </Link>
                 <p>
                     Already have an account? <Link to="/login">Log in</Link>
                 </p>
