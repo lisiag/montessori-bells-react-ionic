@@ -30,7 +30,7 @@ export class Topbar extends React.Component<
     loginProfile() {
         const { user } = this.state;
         if (user != null) {
-            let username = user.email;
+            let username = user.username;
             return (
                 <IonLabel className="profile" onClick={logoutUser}>
                     {username}

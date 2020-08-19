@@ -19,26 +19,37 @@ export const db = firebase.firestore();
 export interface User {
     username: string | null;
     email: string | null;
-    id: string;
 }
 
-let currentUser: firebase.User | null;
+let currentUser: User | null;
 
 export function getCurrentUser(): User | null {
-    if (currentUser) {
-        return {
-            username: currentUser.displayName,
-            email: currentUser.email,
-            id: currentUser.uid
-        };
-    }
-    return null;
+    return currentUser;
 }
 
 export function onAuthStateChanged(callback: (usr: User | null) => void) {
-    firebase.auth().onAuthStateChanged(u => {
-        currentUser = u;
-        callback(getCurrentUser());
+    firebase.auth().onAuthStateChanged(async u => {
+        try {
+            if (u !== null) {
+                // there is a user logged in
+                const email = u?.email;
+                const docRef = db.collection("bellUsers").doc(email!);
+                const doc = await docRef.get();
+
+                if (doc.exists) {
+                    currentUser = {
+                        username: doc.data()!.username,
+                        email: doc.data()!.email
+                    };
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.error("No such user in bellUsers database");
+                }
+            }
+            callback(currentUser);
+        } catch (err) {
+            console.error(err);
+        }
     });
 }
 
@@ -48,16 +59,19 @@ export async function registerUser(
     password: string
 ) {
     try {
-        await firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(function(result) {
-                result.user?.updateProfile({
-                    displayName: username
-                });
+        await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+        db.collection("bellUsers")
+            .doc(email)
+            .set({
+                username: username,
+                email: email
             })
             .catch(function(error) {
-                console.log(error);
+                console.error(
+                    "Error writing user to bellUsers database: ",
+                    error
+                );
             });
 
         loginUser(email, password, "You have registered successfully :)\n");
@@ -81,6 +95,7 @@ export async function loginUser(email: string, password: string, message = "") {
 
 export async function logoutUser() {
     try {
+        currentUser = null;
         await firebase.auth().signOut();
         toast(`Haere ra. You are logged out.`);
     } catch (logoutError) {
