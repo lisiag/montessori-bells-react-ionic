@@ -85,7 +85,23 @@ export async function registerUser(
 export async function loginUser(email: string, password: string, message = "") {
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
-        toast(`${message}Haere mai. You are logged in :)`);
+
+        const docRef = db.collection("bellUsers").doc(email!);
+        const doc = await docRef.get();
+
+        if (doc.exists) {
+            currentUser = {
+                username: doc.data()!.username,
+                email: doc.data()!.email
+            };
+        } else {
+            // doc.data() will be undefined in this case
+            console.error("No such user in bellUsers database");
+        }
+
+        toast(
+            `${message}Haere mai ${currentUser?.username}. You are logged in :)`
+        );
         return true;
     } catch (loginError) {
         toast(loginError.message);
