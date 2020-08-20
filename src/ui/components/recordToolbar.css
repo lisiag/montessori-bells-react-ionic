@@ -1,0 +1,47 @@
+#recordToolbar {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+#recordToolbar button {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    color: rgb(102, 102, 102);
+    font-weight: 100;
+    background: none;
+    padding: 10px;
+    /* No outline to indicate the last clicked button */
+    outline-color: rgba(0,0,0,0);
+}
+
+#recordToolbar button ion-icon {
+    font-size: 22px;
+}
+
+#closeModal {
+    color: rgb(102, 102, 102);
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    background: none;
+}
+
+#instructions {
+    padding-top: 20px;
+}
+
+#draggableColor {
+    color: limegreen;
+}
+
+#fixedBellColor {
+    color: dodgerblue;
+}
+
+.recordIcon {
+    color: red;
+}

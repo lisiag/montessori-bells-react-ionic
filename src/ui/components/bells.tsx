@@ -17,6 +17,7 @@ import { Topbar } from "../components/topbar";
 import { Bell } from "./bell";
 import "./bells.css";
 import { Toolbar } from "./toolbar";
+import { RecordToolbar } from "./recordToolbar";
 
 export interface BellsProps {
     type: string /* Are these bells wanted for a matching activity, sorting activity or making music activity? */;
@@ -74,7 +75,7 @@ export class Bells extends React.Component<BellsProps> {
         } else if (this.props.type === "sort") {
         } else {
             /* type is make_music
-             Arrange the bells from high to low down the centre column of of the grid*/
+               Arrange the bells from high to low down the centre column of of the grid*/
             return this.indices.map(index => (
                 <IonRow key={index}>
                     <IonCol></IonCol>
@@ -122,6 +123,7 @@ export class Bells extends React.Component<BellsProps> {
                             this.setState({ reload: true }); // set any property to force update
                         }}
                     />
+                    <RecordToolbar />
                 </IonFooter>
             </IonPage>
         );
