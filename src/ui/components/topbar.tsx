@@ -2,6 +2,7 @@ import { IonIcon, IonLabel } from "@ionic/react";
 import { home, person } from "ionicons/icons";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import Gravatar from "react-gravatar";
 import {
     onAuthStateChanged,
     getCurrentUser,
@@ -30,12 +31,8 @@ export class Topbar extends React.Component<
     loginProfile() {
         const { user } = this.state;
         if (user != null) {
-            let username = user.username;
-            return (
-                <IonLabel className="profile" onClick={logoutUser}>
-                    {username}
-                </IonLabel>
-            );
+            let email = user.email;
+            return <Gravatar email={email!} onClick={logoutUser} />;
         } else {
             return (
                 <NavLink
