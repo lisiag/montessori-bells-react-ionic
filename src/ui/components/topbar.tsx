@@ -2,7 +2,7 @@ import { IonIcon, IonLabel } from "@ionic/react";
 import { home, person } from "ionicons/icons";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Dropdown, Menu } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import Gravatar from "react-gravatar";
 import {
@@ -35,7 +35,7 @@ export class Topbar extends React.Component<
         const { user } = this.state;
         if (user != null) {
             let email = user.email;
-            let trigger = <Gravatar email={email!} />;
+            let trigger = <Gravatar className="gravatar" email={email!} />;
             return (
                 <Dropdown
                     trigger={trigger}

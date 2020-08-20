@@ -31,3 +31,8 @@
 #topbar .selected {
     color: #3880ff;
 }
+
+.gravatar {
+    border-radius: 50%;
+    padding: 10px;
+}
