@@ -2,6 +2,8 @@ import { IonIcon, IonLabel } from "@ionic/react";
 import { home, person } from "ionicons/icons";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Dropdown, Menu } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
 import Gravatar from "react-gravatar";
 import {
     onAuthStateChanged,
@@ -20,6 +22,7 @@ export class Topbar extends React.Component<
     TopbarProps,
     { user: User | null }
 > {
+    gravatarDropdownOptions = [{ key: "log-out", text: "Log Out", icon: null }];
     constructor(props: TopbarProps) {
         super(props);
         this.state = { user: getCurrentUser() };
@@ -32,7 +35,16 @@ export class Topbar extends React.Component<
         const { user } = this.state;
         if (user != null) {
             let email = user.email;
-            return <Gravatar email={email!} onClick={logoutUser} />;
+            let trigger = <Gravatar email={email!} />;
+            return (
+                <Dropdown
+                    trigger={trigger}
+                    options={this.gravatarDropdownOptions}
+                    pointing="top right"
+                    icon={null}
+                    onChange={logoutUser}
+                />
+            );
         } else {
             return (
                 <NavLink
