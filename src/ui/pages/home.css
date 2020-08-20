@@ -1,3 +1,7 @@
 .aboutLabel {
     padding-left: 10px;
 }
+
+.greyOut {
+    color: grey !important;
+}

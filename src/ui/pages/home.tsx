@@ -32,13 +32,19 @@ const homepage: React.FC = () => {
                         <IonLabel>Match bells: octave</IonLabel>
                     </IonItem>
                     <IonItem>
-                        <IonLabel>Sort bells: high/low</IonLabel>
+                        <IonLabel className="greyOut">
+                            Sort bells: high/low (Coming soon)
+                        </IonLabel>
                     </IonItem>
                     <IonItem>
-                        <IonLabel>Sort bells: 3</IonLabel>
+                        <IonLabel className="greyOut">
+                            Sort bells: 3 (Coming soon)
+                        </IonLabel>
                     </IonItem>
                     <IonItem>
-                        <IonLabel>Sort bells: octave</IonLabel>
+                        <IonLabel className="greyOut">
+                            Sort bells: octave (Coming soon)
+                        </IonLabel>
                     </IonItem>
                     <IonItem routerLink="/make_music">
                         <IonLabel>Make music</IonLabel>
