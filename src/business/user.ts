@@ -121,3 +121,10 @@ export async function logoutUser() {
         return false;
     }
 }
+
+export interface NoteTime {
+    note: number;
+    time: number;
+}
+
+export async function saveSong() {}

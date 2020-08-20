@@ -5,35 +5,35 @@
     z-index: 10;
 }
 
-.note1 {
+[data-note="1"] {
     --bell-color: red;
 }
 
-.note2 {
+[data-note="2"] {
     --bell-color: darkorange;
 }
 
-.note3 {
+[data-note="3"] {
     --bell-color: gold;
 }
 
-.note4 {
+[data-note="4"] {
     --bell-color: lightseagreen;
 }
 
-.note5 {
+[data-note="5"] {
     --bell-color: deepskyblue;
 }
 
-.note6 {
+[data-note="6"] {
     --bell-color: blue;
 }
 
-.note7 {
+[data-note="7"] {
     --bell-color: blueviolet;
 }
 
-.note0 {
+[data-note="0"] {
     --bell-color: magenta;
 }
 

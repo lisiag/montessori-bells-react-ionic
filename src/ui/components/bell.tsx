@@ -148,7 +148,7 @@ export class Bell extends React.Component<BellProps> {
             color2 = "#329d32";
         }
         return (
-            <div className={`${type} note${this.props.note}`}>
+            <div className={type} data-note={this.props.note}>
                 {/* This is the svg that Ionic uses for its "notifications" icon. There are many
                 other bell images available online. I like this one because it is clear and simple.
                 I use the svg directly rather than through IonIcon so that I can modify its

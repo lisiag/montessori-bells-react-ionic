@@ -2,6 +2,8 @@ import { IonIcon, IonLabel, IonInput, IonButton } from "@ionic/react";
 import { close, ellipse, helpCircle, musicalNotes, stop } from "ionicons/icons";
 import React from "react";
 import Modal from "react-modal";
+import { toast } from "./toast";
+import { saveSong, NoteTime } from "../../business/user";
 import "./recordToolbar.css";
 
 /* although empty, this seems to be required; otherwise RecordToolBarState is not accepted */
@@ -12,6 +14,11 @@ export interface RecordToolbarState {
     saveIsOpen: boolean;
     recording: boolean;
 }
+
+/* Where the user's song will be stored when the user clicks Record */
+let song: NoteTime[] = [];
+/* Get all the bells so their notes can be stored in the recorded song */
+const bells = document.getElementsByClassName("fixedBell");
 
 /* A toolbar of buttons relating to the 'making music' activity */
 export class RecordToolbar extends React.Component<
@@ -30,22 +37,29 @@ export class RecordToolbar extends React.Component<
     }
 
     openInstructions = () => {
+        /* Triggers modal with instructions to be opened */
         this.setState({ instructionsIsOpen: true });
     };
 
     closeInstructions = () => {
+        /* Triggers modal with instructions to be closed */
         this.setState({ instructionsIsOpen: false });
     };
 
     openSave = () => {
+        /* Triggers modal inviting user to save their recorded song to be opened */
         this.setState({ saveIsOpen: true });
     };
 
     closeSave = () => {
+        /* Triggers 'save' modal to be closed */
         this.setState({ saveIsOpen: false });
+        /* reset song as empty ready for next recording */
+        song = [];
+        finishRecording(); /* garbage collection: remove eventListeners from bells */
     };
 
-    recordIcon() {
+    toggleRecordIcon() {
         if (this.state.recording) {
             this.recordButtonLabel = "Stop";
             return <IonIcon className="recordIcon" icon={stop} />;
@@ -55,23 +69,33 @@ export class RecordToolbar extends React.Component<
         }
     }
 
-    record() {
+    /* Recording has been stopped or started */
+    onClickRecord() {
         if (this.state.recording) {
-            this.openSave();
+            this.openSave(); // triggers modal to pop up, inviting user to save song
         } else {
+            recordSong(); // start recording the bells that are tapped
         }
         this.setState({ recording: !this.state.recording });
     }
+
+    /* The user clicked 'Save' button */
+    saveSongAndClose = () => {
+        /* call save song in the business layer so business layer can save song to the database */
+        saveSong();
+        this.closeSave();
+        toast("Your song has been saved.");
+    };
 
     render() {
         return (
             <div id="recordToolbar">
                 <button
                     onClick={() => {
-                        this.record();
+                        this.onClickRecord();
                     }}
                 >
-                    {this.recordIcon()}
+                    {this.toggleRecordIcon()}
                     <IonLabel>{this.recordButtonLabel}</IonLabel>
                 </button>
 
@@ -90,10 +114,12 @@ export class RecordToolbar extends React.Component<
                                 placeholder="song name"
                                 onIonChange={(e: any) => {}}
                             />
-                            <IonButton className="button-solid">
+                            <IonButton onClick={this.closeSave}>
                                 Discard
                             </IonButton>
-                            <IonButton className="button-solid">Save</IonButton>
+                            <IonButton onClick={this.saveSongAndClose}>
+                                Save
+                            </IonButton>
                         </form>
                     </div>
                 </Modal>
@@ -122,5 +148,26 @@ export class RecordToolbar extends React.Component<
                 </button>
             </div>
         );
+    }
+}
+
+/* Bell has been tapped. Add its note and timepoint to song. */
+const startBell = (ev: Event) => {
+    const bell = ev.currentTarget as HTMLElement;
+    song.push({ note: Number(bell.dataset.note), time: Date.now() });
+    console.log(`DEBUG song`, song);
+};
+
+/* Record the bells that are tapped, and the timepoint of each tap */
+function recordSong() {
+    for (let i = 0; i < bells.length; ++i) {
+        bells[i].addEventListener("pointerdown", startBell, true);
+    }
+}
+
+/* Song has been saved or discarded. Remove eventListeners from bells */
+function finishRecording() {
+    for (let i = 0; i < bells.length; ++i) {
+        bells[i].removeEventListener("pointerdown", startBell);
     }
 }
