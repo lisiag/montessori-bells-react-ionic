@@ -67,8 +67,8 @@ export async function registerUser(
         // add the new user to authentication table for this project's firebase project
         await firebase.auth().createUserWithEmailAndPassword(email, password);
 
-        // add the new user's details to the 'bellUsers' table in this project's firebase project so
-        // we can access the user's details from throughout this app
+        // add the new user's details to the 'bellUsers' table in this project's firebase project
+        // for convenience
         db.collection("bellUsers")
             .doc(email)
             .set({
@@ -94,11 +94,10 @@ export async function loginUser(email: string, password: string, message = "") {
     try {
         await firebase.auth().signInWithEmailAndPassword(email, password);
 
-        // get the user's details from the 'bellUsers' table in this project's firebase project for
-        // use throughout this app
+        // get the user's details from the 'bellUsers' table in this project's firebase project
         const docRef = db.collection("bellUsers").doc(email!);
         const doc = await docRef.get();
-        // The following is duplicated from onAuthStateChanged but attempts to get the welcome
+        // The following is duplicated from onAuthStateChanged, but my attempts to get the welcome
         // message and username to display correctly if the code was extracted into a separate
         // function have not yet succeeded
         if (doc.exists) {
@@ -132,18 +131,20 @@ export async function logoutUser() {
     }
 }
 
-// units of song to be saved and played
+// units of song
 export interface NoteTime {
     note: number;
     time: number;
 }
 
+// format in which a song is stored in database
 export interface SongData {
     title: string;
     song: NoteTime[];
 }
 
-// for now each user can only have one song
+// for now, each user can only have one saved song, so a user's song is overwritten every time the user saves a song
+// in a future version of this app, users will be able to save multiple songs
 export async function saveSong(title: string, song: NoteTime[]) {
     try {
         await db
