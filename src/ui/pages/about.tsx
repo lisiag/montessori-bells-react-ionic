@@ -1,12 +1,5 @@
+import { IonContent, IonHeader, IonPage } from "@ionic/react";
 import React from "react";
-import {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonText
-} from "@ionic/react";
 import { Topbar } from "../components/topbar";
 import "./about.css";
 
@@ -17,12 +10,7 @@ const about: React.FC = () => {
                 <Topbar title="About" />
             </IonHeader>
             <IonContent>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">About</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <IonText color="secondary">
+                <div className="content">
                     <p>
                         This Montessori Bells app is developed by{" "}
                         <a href="https://www.linkedin.com/in/lisia-grocott-7996491a0/">
@@ -95,7 +83,7 @@ const about: React.FC = () => {
                         </a>{" "}
                         available for free on Project Gutenberg.
                     </p>
-                </IonText>
+                </div>
             </IonContent>
         </IonPage>
     );
