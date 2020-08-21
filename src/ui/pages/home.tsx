@@ -49,6 +49,9 @@ const homepage: React.FC = () => {
                     <IonItem routerLink="/make_music">
                         <IonLabel>Make music</IonLabel>
                     </IonItem>
+                    <IonItem routerLink="/play_songs">
+                        <IonLabel>Play song</IonLabel>
+                    </IonItem>
                     <IonItem routerLink="/about">
                         <IonIcon icon={informationCircle} />
                         <IonLabel class="aboutLabel">About</IonLabel>

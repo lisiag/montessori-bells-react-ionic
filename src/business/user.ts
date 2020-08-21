@@ -138,15 +138,42 @@ export interface NoteTime {
     time: number;
 }
 
+export interface SongData {
+    title: string;
+    song: NoteTime[];
+}
+
 // for now each user can only have one song
 export async function saveSong(title: string, song: NoteTime[]) {
-    db.collection("songs")
-        .doc(currentUser!.email!)
-        .set({
-            title: title,
-            song: song
-        })
-        .catch(function(error) {
-            console.error("Error writing song to songs database: ", error);
-        });
+    try {
+        await db
+            .collection("songs")
+            .doc(currentUser!.email!)
+            .set({
+                title: title,
+                song: song
+            });
+    } catch (error) {
+        console.error("Error writing song to songs database: ", error);
+    }
+}
+
+// get currentUser's song from database if currentUser has a song
+// In a future version of this app, currentUser will have a map or array of songs not just one song
+export async function getSong(): Promise<SongData | void> {
+    if (currentUser == null) {
+        // there are no saved songs when not logged in
+        return;
+    }
+    const docRef = db.collection("songs").doc(currentUser.email!);
+    const doc = await docRef.get();
+    if (doc.exists) {
+        return {
+            title: doc.data()!.title,
+            song: doc.data()!.song
+        };
+    } else {
+        // doc.data() will be undefined in this case
+        console.error("No such song in songs database");
+    }
 }

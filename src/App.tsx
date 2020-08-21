@@ -21,6 +21,7 @@ import "./variables.css";
 import about from "./ui/pages/about";
 import { BellMatch } from "./ui/pages/bell_match";
 import { MakeMusic } from "./ui/pages/make_music";
+import playSongs from "./ui/pages/play_songs";
 import homepage from "./ui/pages/home";
 import Login from "./ui/pages/login";
 import Register from "./ui/pages/register";
@@ -49,6 +50,7 @@ const App: React.FC = () => (
                     exact={true}
                 />
                 <Route path="/make_music" component={MakeMusic} exact={true} />
+                <Route path="/play_songs" component={playSongs} exact={true} />
             </IonRouterOutlet>
         </IonReactRouter>
     </IonApp>
