@@ -17,7 +17,7 @@ import React from "react";
 import Modal from "react-modal";
 import { Redirect, Route } from "react-router-dom";
 /* Theme variables */
-import "./theme/variables.css";
+import "./variables.css";
 import about from "./ui/pages/about";
 import { BellMatch } from "./ui/pages/bell_match";
 import { MakeMusic } from "./ui/pages/make_music";
