@@ -17,6 +17,7 @@ export interface RecordToolbarState {
 
 /* Where the user's song will be stored when the user clicks Record */
 let song: NoteTime[] = [];
+let title: string;
 /* Get all the bells so their notes can be stored in the recorded song */
 const bells = document.getElementsByClassName("fixedBell");
 
@@ -82,7 +83,7 @@ export class RecordToolbar extends React.Component<
     /* The user clicked 'Save' button */
     saveSongAndClose = () => {
         /* call save song in the business layer so business layer can save song to the database */
-        saveSong();
+        saveSong(title!, song);
         this.closeSave();
         toast("Your song has been saved.");
     };
@@ -110,9 +111,8 @@ export class RecordToolbar extends React.Component<
                     <div id="save">
                         <form>
                             <IonInput
-                                type="email"
                                 placeholder="song name"
-                                onIonChange={(e: any) => {}}
+                                onIonChange={e => (title = e.detail.value!)}
                             />
                             <IonButton onClick={this.closeSave}>
                                 Discard
@@ -168,6 +168,6 @@ function recordSong() {
 /* Song has been saved or discarded. Remove eventListeners from bells */
 function finishRecording() {
     for (let i = 0; i < bells.length; ++i) {
-        bells[i].removeEventListener("pointerdown", startBell);
+        bells[i].removeEventListener("pointerdown", startBell, true);
     }
 }
