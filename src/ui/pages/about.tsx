@@ -31,7 +31,7 @@ const about: React.FC = () => {
                         and based on activities devised by Maria Montessori.
                         Although an app is no replacement for the tactile and
                         kinaesthetic experience of working with real bells where
-                        they are available, the bells are one of the most
+                        they are available, the real bells are one of the most
                         expensive pieces of equipment in the Montessori
                         curriculum and as such are out of reach of many
                         Montessori homeschool families and educators. This app
@@ -40,9 +40,36 @@ const about: React.FC = () => {
                         them.
                     </p>
                     <p>
-                        For information on how to present this app's activities
-                        to children, see a Montessori manual (often called an
-                        album) on the Sensorial activities:
+                        This app is intended for children age three years and
+                        up, under adult supervision.
+                    </p>
+                    <p>
+                        We recommend the adult explore the activities before
+                        presenting them to the child. They are designed to be
+                        presented to the child in the same way as the real
+                        Montessori bells and other Montessori sensorial
+                        activities. Usually, the adult and child will be seated
+                        comfortably at a low table, the adult sitting on the
+                        child's right if the adult is right-handed. The adult
+                        will say something like "Today, I'm going to show you
+                        the <em>matching bells</em> activity. It's my turn first
+                        and then you can have a turn." The adult will then
+                        slowly demonstrate the activity, mostly without saying
+                        anything, but possibly pausing at some point to say,
+                        "I'm listening to hear which blue bell is the same as
+                        the green bell. Then the adult invites the child to have
+                        a turn.
+                    </p>
+                    <p>
+                        If the child doesn't match the bells correctly, the
+                        adult does not usually correct the child but instead
+                        demonstrates the activity again, either immediately or
+                        on a later occasion, perhaps emphasising the aspect the
+                        child misunderstood. In a Montessori environment, this
+                        app's <em>Show answers</em> feature would not be used.
+                        For more information on how to present Montessori bells
+                        activities to children, see a Montessori manual (often
+                        called an album) on the Sensorial activities, such as:
                     </p>
                     <ul>
                         <li>
@@ -61,8 +88,8 @@ const about: React.FC = () => {
                         <em>The Discovery of the Child</em>.
                     </p>
                     <p>
-                        For information on Montessori education, a great place
-                        to start, and a short read, is{" "}
+                        For general information on Montessori education, a great
+                        place to start (and a short read) is{" "}
                         <a href="http://www.gutenberg.org/ebooks/29635">
                             <em>Montessori's Own Handbook</em>
                         </a>{" "}
