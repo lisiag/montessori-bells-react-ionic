@@ -180,9 +180,7 @@ export class Bell extends React.Component<BellProps> {
     }
 
     render() {
-        if (this.howl == null || this.currentNote !== this.props.note) {
-            this.changeNote(this.props.note);
-        }
+        this.changeNote(this.props.note);
 
         if (this.props.cls === "draggable") {
             // create a draggable bell in the left column - that can be dragged around the screen
