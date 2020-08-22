@@ -10,14 +10,14 @@ import "./recordToolbar.css";
 export interface RecordToolbarProps {}
 
 export interface RecordToolbarState {
-    instructionsIsOpen: boolean;
-    saveIsOpen: boolean;
+    instructionsIsOpen: boolean /* is the instructions modal open? */;
+    saveIsOpen: boolean /* is the save song modal open? */;
     recording: boolean;
 }
 
 /* Where the user's song will be stored when the user clicks Record */
 let song: NoteTime[] = [];
-let title: string;
+let title = "";
 /* Get all the bells so their notes can be stored in the recorded song */
 const bells = document.getElementsByClassName("fixedBell");
 
@@ -57,6 +57,7 @@ export class RecordToolbar extends React.Component<
         this.setState({ saveIsOpen: false });
         /* reset song as empty ready for next recording */
         song = [];
+        title = "";
         finishRecording(); /* garbage collection: remove eventListeners from bells */
     };
 
@@ -83,6 +84,9 @@ export class RecordToolbar extends React.Component<
     /* The user clicked 'Save' button */
     saveSongAndClose = () => {
         /* call save song in the business layer so business layer can save song to the database */
+        if (title === "") {
+            title = "My song";
+        }
         saveSong(title!, song);
         this.closeSave();
         toast("Your song has been saved.");
@@ -155,7 +159,6 @@ export class RecordToolbar extends React.Component<
 const startBell = (ev: Event) => {
     const bell = ev.currentTarget as HTMLElement;
     song.push({ note: Number(bell.dataset.note), time: Date.now() });
-    console.log(`DEBUG song`, song);
 };
 
 /* Record the bells that are tapped, and the timepoint of each tap */
