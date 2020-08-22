@@ -26,7 +26,6 @@ export class BellMatch extends React.Component<BellMatchProps> {
     constructor(props: BellMatchProps) {
         super(props);
         this.title = "Pair the matching bells";
-        this.init();
     }
 
     init() {

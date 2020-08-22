@@ -14,6 +14,9 @@ const LEFT_BOUND = 10;
 const TOP_BOUND = 7;
 const RIGHT_BOUND_FACTOR = 2.12;
 
+/* used for creating unique id */
+let gradCounter = 0;
+
 export class Bell extends React.Component<BellProps> {
     /* Definite assignment assertion so howl can be initialized in a function separate from constructor */
     howl!: Howl;
@@ -140,7 +143,11 @@ export class Bell extends React.Component<BellProps> {
     }
 
     bellSvg(type: string) {
-        const id = type;
+        /* To get around Ionic's use of shadow DOM, the colour gradient used as the "fill" of the
+        svg must have a unique id. Otherwise the bell only displays the first time the page is
+        loaded. If you revisit the page, the bells don't display. Inspecting the elements on the
+        page, it looks like the bells are there but have no color? */
+        const id = type + "Grad" + ++gradCounter;
         let color1 = "#1e90ff";
         let color2 = "#1e50af";
         if (type === "draggableBell") {
