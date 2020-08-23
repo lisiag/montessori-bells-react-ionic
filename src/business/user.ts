@@ -25,37 +25,65 @@ export interface User {
     email: string | null;
 }
 
-let currentUser: User | null;
-
-export function getCurrentUser(): User | null {
-    return currentUser;
+// units of song
+export interface NoteTime {
+    note: number;
+    time: number;
 }
 
-// When a user logs in or out
-export function onAuthStateChanged(callback: (usr: User | null) => void) {
-    firebase.auth().onAuthStateChanged(async u => {
-        try {
-            if (u !== null) {
-                // there is a user logged in
-                const email = u?.email;
-                const docRef = db.collection("bellUsers").doc(email!);
-                const doc = await docRef.get();
+// format in which a song is stored in database
+export interface SongData {
+    title: string;
+    song: NoteTime[];
+}
 
-                if (doc.exists) {
+export let currentUser: User | null = null;
+
+type Callback = (usr: User | null) => void;
+
+// listeners that are called when the logged in user changes
+let userListeners: Set<Callback> | null = null;
+
+// This function is called by pages or components that want to be notified if the logged in user
+// changes: currently topbar - the top toolbar - because it displays the gravatar of the current
+// user; and play_songs because it needs to display the saved song (if any) of the current user
+export function onAuthStateChanged(callback: Callback) {
+    if (userListeners == null) {
+        userListeners = new Set();
+        firebase.auth().onAuthStateChanged(async u => {
+            try {
+                if (u !== null) {
+                    // there is a user logged in
+                    const email = u?.email;
+                    const docRef = db.collection("bellUsers").doc(email!);
+                    const doc = await docRef.get();
                     currentUser = {
                         username: doc.data()!.username,
                         email: doc.data()!.email
                     };
                 } else {
-                    // doc.data() will be undefined in this case
-                    console.error("No such user in bellUsers database");
+                    // user logged out?
                 }
+                if (userListeners != null) {
+                    for (const cb of userListeners) {
+                        cb(currentUser);
+                    }
+                }
+            } catch (err) {
+                console.error(err);
             }
-            callback(currentUser);
-        } catch (err) {
-            console.error(err);
-        }
-    });
+        });
+    }
+
+    // this line is executed before "if (userListeners != null)" above because of async await. But
+    // it can't be placed before the if block above because userListeners might be null
+    userListeners.add(callback);
+
+    // not used currently but could be used to remove a callback from userListeners if we wanted it
+    // to stop listening
+    return () => {
+        userListeners?.delete(callback);
+    };
 }
 
 export async function registerUser(
@@ -98,8 +126,7 @@ export async function loginUser(email: string, password: string, message = "") {
         const docRef = db.collection("bellUsers").doc(email!);
         const doc = await docRef.get();
         // The following is duplicated from onAuthStateChanged, but my attempts to get the welcome
-        // message and username to display correctly if the code was extracted into a separate
-        // function have not yet succeeded
+        // message and username to display correctly any other way have not yet succeeded
         if (doc.exists) {
             currentUser = {
                 username: doc.data()!.username,
@@ -107,7 +134,10 @@ export async function loginUser(email: string, password: string, message = "") {
             };
         } else {
             // doc.data() will be undefined in this case
-            console.error("No such user in bellUsers database");
+            console.error(
+                `loginUser called but this user not in bellUsers database:`,
+                email
+            );
         }
 
         toast(
@@ -131,20 +161,9 @@ export async function logoutUser() {
     }
 }
 
-// units of song
-export interface NoteTime {
-    note: number;
-    time: number;
-}
-
-// format in which a song is stored in database
-export interface SongData {
-    title: string;
-    song: NoteTime[];
-}
-
-// for now, each user can only have one saved song, so a user's song is overwritten every time the user saves a song
-// in a future version of this app, users will be able to save multiple songs
+// Save song to database. User has recorded a song in the "Make music" activity and clicked "Save".
+// For now, each user can only have one saved song, so a user's song is overwritten every time the
+// user saves a song. In a future version of this app, users will be able to save multiple songs
 export async function saveSong(title: string, song: NoteTime[]) {
     try {
         await db
@@ -159,8 +178,8 @@ export async function saveSong(title: string, song: NoteTime[]) {
     }
 }
 
-// get currentUser's song from database if currentUser has a song
-// In a future version of this app, currentUser will have a map or array of songs not just one song
+// Get currentUser's song from database if currentUser has a song. In a future version of this app,
+// currentUser will have a map or array of songs not just one song
 export async function getSong(): Promise<SongData | void> {
     if (currentUser == null) {
         // there are no saved songs when not logged in

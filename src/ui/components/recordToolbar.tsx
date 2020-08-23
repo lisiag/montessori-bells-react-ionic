@@ -148,7 +148,7 @@ export class RecordToolbar extends React.Component<
 
                 <button onClick={() => {}}>
                     <IonIcon icon={musicalNotes} />
-                    <IonLabel>My songs</IonLabel>
+                    <IonLabel>My song</IonLabel>
                 </button>
             </div>
         );

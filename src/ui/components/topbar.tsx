@@ -7,7 +7,7 @@ import "semantic-ui-css/semantic.min.css";
 import Gravatar from "react-gravatar";
 import {
     onAuthStateChanged,
-    getCurrentUser,
+    currentUser,
     User,
     logoutUser
 } from "../../business/user";
@@ -25,7 +25,9 @@ export class Topbar extends React.Component<
     gravatarDropdownOptions = [{ key: "log-out", text: "Log Out", icon: null }];
     constructor(props: TopbarProps) {
         super(props);
-        this.state = { user: getCurrentUser() };
+        this.state = { user: currentUser };
+        /* Send a callback to onAuthStateChanged that listens for a change of user, so we are
+        informed when user changes, so the gravatar is updated when user changes */
         onAuthStateChanged(user => {
             this.setState({ user });
         });
