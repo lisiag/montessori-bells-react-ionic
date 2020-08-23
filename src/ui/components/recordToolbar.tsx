@@ -1,9 +1,16 @@
 import { IonIcon, IonLabel, IonInput, IonButton } from "@ionic/react";
 import { close, ellipse, helpCircle, musicalNotes, stop } from "ionicons/icons";
 import React from "react";
+import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "./toast";
-import { saveSong, NoteTime } from "../../business/user";
+import {
+    saveSong,
+    NoteTime,
+    currentUser,
+    onAuthStateChanged,
+    User
+} from "../../business/user";
 import "./recordToolbar.css";
 
 /* although empty, this seems to be required; otherwise RecordToolBarState is not accepted */
@@ -12,7 +19,9 @@ export interface RecordToolbarProps {}
 export interface RecordToolbarState {
     instructionsIsOpen: boolean /* is the instructions modal open? */;
     saveIsOpen: boolean /* is the save song modal open? */;
+    loginToRecordIsOpen: boolean /* is the modal open that tells the user they must be logged in to record? */;
     recording: boolean;
+    user: User | null;
 }
 
 /* Where the user's song will be stored when the user clicks Record */
@@ -32,9 +41,17 @@ export class RecordToolbar extends React.Component<
         this.state = {
             instructionsIsOpen: false,
             saveIsOpen: false,
-            recording: false
+            loginToRecordIsOpen: false,
+            recording: false,
+            user: currentUser
         };
         this.recordButtonLabel = "Record";
+        /* Send a callback to onAuthStateChanged that listens for a change of user, so we are
+           informed when user changes, so onClickRecord can disable recording when user is not
+           logged in */
+        onAuthStateChanged(user => {
+            this.setState({ user });
+        });
     }
 
     openInstructions = () => {
@@ -61,6 +78,16 @@ export class RecordToolbar extends React.Component<
         finishRecording(); /* garbage collection: remove eventListeners from bells */
     };
 
+    openLoginToRecord = () => {
+        /* Triggers modal telling user they must be logged in to record to be opened */
+        this.setState({ loginToRecordIsOpen: true });
+    };
+
+    closeLoginToRecord = () => {
+        /* Triggers 'loginToRecord' modal to be closed */
+        this.setState({ loginToRecordIsOpen: false });
+    };
+
     toggleRecordIcon() {
         if (this.state.recording) {
             this.recordButtonLabel = "Stop";
@@ -73,6 +100,12 @@ export class RecordToolbar extends React.Component<
 
     /* Recording has been stopped or started */
     onClickRecord() {
+        /* If no user is logged in, cause a modal to pop up that tells the user they must be logged
+           in to record their songs */
+        if (this.state.user == null) {
+            this.openLoginToRecord();
+            return;
+        }
         if (this.state.recording) {
             this.openSave(); // triggers modal to pop up, inviting user to save song
         } else {
@@ -103,6 +136,20 @@ export class RecordToolbar extends React.Component<
                     {this.toggleRecordIcon()}
                     <IonLabel>{this.recordButtonLabel}</IonLabel>
                 </button>
+
+                <Modal
+                    isOpen={this.state.loginToRecordIsOpen}
+                    onRequestClose={this.closeLoginToRecord}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <button id="closeModal" onClick={this.closeLoginToRecord}>
+                        <IonIcon icon={close}></IonIcon>
+                    </button>
+                    <div id="instructions" onClick={this.closeLoginToRecord}>
+                        To record your songs, please{" "}
+                        <Link to="/login">log in</Link>.
+                    </div>
+                </Modal>
 
                 <Modal
                     isOpen={this.state.saveIsOpen}
