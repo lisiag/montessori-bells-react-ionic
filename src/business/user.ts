@@ -75,8 +75,9 @@ export function onAuthStateChanged(callback: Callback) {
         });
     }
 
-    // this line is executed before "if (userListeners != null)" above because of async await. But
-    // it can't be placed before the if block above because userListeners might be null
+    // This works for current purposes but notice that we are adding the new callback to
+    // useListeners *after* all useListener callbacks are called above. This might not work for for
+    // all potential callbacks.
     userListeners.add(callback);
 
     // not used currently but could be used to remove a callback from userListeners if we wanted it
