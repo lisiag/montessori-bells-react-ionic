@@ -102,6 +102,25 @@ export class Bells extends React.Component<BellsProps> {
         }
     }
 
+    getToolbar() {
+        switch (this.props.type) {
+            case "match":
+                return (
+                    <Toolbar
+                        instructions={this.props.instructions}
+                        answersShow={this.resetAnswers}
+                        onPlayAgain={() => {
+                            this.init();
+                            this.setState({ reload: true }); // set any property to force update
+                        }}
+                    />
+                );
+            case "sort":
+            case "make_music":
+                return <RecordToolbar />;
+        }
+    }
+
     render() {
         /* Arrange the bells
          */
@@ -114,17 +133,7 @@ export class Bells extends React.Component<BellsProps> {
                 <IonContent className="ion-padding">
                     <IonGrid id="Bells">{this.arrangeBells()}</IonGrid>
                 </IonContent>
-                <IonFooter>
-                    <Toolbar
-                        instructions={this.props.instructions}
-                        answersShow={this.resetAnswers}
-                        onPlayAgain={() => {
-                            this.init();
-                            this.setState({ reload: true }); // set any property to force update
-                        }}
-                    />
-                    <RecordToolbar />
-                </IonFooter>
+                <IonFooter>{this.getToolbar()}</IonFooter>
             </IonPage>
         );
     }
