@@ -179,6 +179,17 @@ export async function saveSong(title: string, song: NoteTime[]) {
     }
 }
 
+// If the songs database table is modified then anywhere in app that uses the data (i.e. play_songs
+// page when it calls getSong) needs to be notified
+export function onSongsStateChanged(callback: Callback) {
+    db.collection("songs")
+        .doc("b@b.com")
+        .onSnapshot(doc => {
+            console.log("Songs state changed. Current song: ", doc.data());
+            callback(currentUser);
+        });
+}
+
 // Get currentUser's song from database if currentUser has a song. In a future version of this app,
 // currentUser will have a map or array of songs not just one song
 export async function getSong(): Promise<SongData | void> {

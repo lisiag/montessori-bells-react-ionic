@@ -15,7 +15,8 @@ import {
     currentUser,
     getSong,
     NoteTime,
-    onAuthStateChanged
+    onAuthStateChanged,
+    onSongsStateChanged
 } from "../../business/user";
 import { Util } from "../../business/util";
 import { Topbar } from "../components/topbar";
@@ -95,8 +96,11 @@ const PlaySongs: React.FC = () => {
     /* https://www.digitalocean.com/community/tutorials/five-ways-to-convert-react-class-components-to-functional-components-with-react-hooks */
     useEffect(checkForUserAndSong);
 
-    /* also update page content if user changes to get the new user's song (or lack of song) */
+    /* also update page content if user changes, to get the new user's song (or lack of song) */
     onAuthStateChanged(checkForUserAndSong);
+
+    /* also update page content if songs database changes, so the song we display is the *latest* saved song */
+    onSongsStateChanged(checkForUserAndSong);
 
     return (
         <IonPage>
