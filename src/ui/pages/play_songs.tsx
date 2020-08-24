@@ -111,7 +111,7 @@ const PlaySongs: React.FC = () => {
                             playSong(song.song);
                         }}
                     >
-                        <IonIcon padding-right="200px" icon={play} />
+                        <IonIcon className="playIcon" icon={play} />
                         <IonLabel>{song.title}</IonLabel>
                     </IonItem>
                 );
