@@ -46,8 +46,9 @@ const PlaySongs: React.FC = () => {
 
     const checkForUserAndSong = () => {
         /* Because this is async, to prevent infinite loop, only continue if message is null */
-        if (message != null) return;
-
+        if (message != null) {
+            return;
+        }
         /* If no one is logged in, display message for user not logged in */
         if (currentUser == null) {
             setMessage(
