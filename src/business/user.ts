@@ -39,15 +39,20 @@ export interface SongData {
 
 export let currentUser: User | null = null;
 
-type Callback = (usr: User | null) => void;
+type UserCallback = (usr: User | null) => void;
 
 // listeners that are called when the logged in user changes
-let userListeners: Set<Callback> | null = null;
+let userListeners: Set<UserCallback> | null = null;
+
+type SongCallback = (song: SongData | null) => void;
+
+// listeners that are called when the 'songs' database changes, i.e. the logged in user's saved song changes
+let songsListeners = new Set<SongCallback>();
 
 // This function is called by pages or components that want to be notified if the logged in user
 // changes: currently topbar - the top toolbar - because it displays the gravatar of the current
 // user; and play_songs because it needs to display the saved song (if any) of the current user
-export function onAuthStateChanged(callback: Callback) {
+export function onAuthStateChanged(callback: UserCallback) {
     if (userListeners == null) {
         userListeners = new Set();
         firebase.auth().onAuthStateChanged(async u => {
@@ -162,32 +167,37 @@ export async function logoutUser() {
     }
 }
 
+// add a listener to the set listening for changes to the 'songs' database
+export function addSongsListener(callback: SongCallback) {
+    songsListeners.add(callback);
+}
+
+// If the 'songs' database is modified then anywhere in app that uses the data (i.e. play_songs
+// page when it calls getSong) needs to be notified
+function notifySongsListeners(currentSong: SongData) {
+    for (const cb of songsListeners) {
+        cb(currentSong);
+    }
+}
+
 // Save song to database. User has recorded a song in the "Make music" activity and clicked "Save".
 // For now, each user can only have one saved song, so a user's song is overwritten every time the
 // user saves a song. In a future version of this app, users will be able to save multiple songs
 export async function saveSong(title: string, song: NoteTime[]) {
     try {
+        const currentSong = {
+            title,
+            song
+        };
         await db
             .collection("songs")
             .doc(currentUser!.email!)
-            .set({
-                title: title,
-                song: song
-            });
+            .set(currentSong);
+        // notify listeners of this change
+        notifySongsListeners(currentSong);
     } catch (error) {
         console.error("Error writing song to songs database: ", error);
     }
-}
-
-// If the songs database table is modified then anywhere in app that uses the data (i.e. play_songs
-// page when it calls getSong) needs to be notified
-export function onSongsStateChanged(callback: Callback) {
-    if (currentUser == null) return;
-    db.collection("songs")
-        .doc(currentUser.email!)
-        .onSnapshot(doc => {
-            callback(currentUser);
-        });
 }
 
 // Get currentUser's song from database if currentUser has a song. In a future version of this app,
@@ -206,6 +216,5 @@ export async function getSong(): Promise<SongData | void> {
         };
     } else {
         // doc.data() will be undefined in this case
-        console.error("No such song in songs database");
     }
 }
