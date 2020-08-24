@@ -42,9 +42,9 @@ export class BellMatch extends React.Component<BellMatchProps> {
 
         let sing_plural;
         if (this.level === 1) {
-            sing_plural = "Click each bell to play its note. Drag the ";
+            sing_plural = "Tap each bell to play its note. Drag the ";
         } else {
-            sing_plural = "Click each bell to play its note. Drag each ";
+            sing_plural = "Tap each bell to play its note. Drag each ";
         }
         this.instructions = React.createElement(
             "div",
