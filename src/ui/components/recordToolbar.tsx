@@ -1,6 +1,6 @@
 import { IonIcon, IonLabel, IonInput, IonButton } from "@ionic/react";
 import { close, ellipse, helpCircle, musicalNotes, stop } from "ionicons/icons";
-import React from "react";
+import React, { DetailedReactHTMLElement, HTMLAttributes } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "./toast";
@@ -14,7 +14,12 @@ import {
 import "./recordToolbar.css";
 
 /* although empty, this seems to be required; otherwise RecordToolBarState is not accepted */
-export interface RecordToolbarProps {}
+export interface RecordToolbarProps {
+    instructions: DetailedReactHTMLElement<
+        HTMLAttributes<HTMLElement>,
+        HTMLElement
+    >;
+}
 
 export interface RecordToolbarState {
     instructionsIsOpen: boolean /* is the instructions modal open? */;
@@ -189,7 +194,7 @@ export class RecordToolbar extends React.Component<
                         <IonIcon icon={close}></IonIcon>
                     </button>
                     <div id="instructions" onClick={this.closeInstructions}>
-                        some instructions
+                        {this.props.instructions}
                     </div>
                 </Modal>
 

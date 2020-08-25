@@ -117,7 +117,7 @@ export class Bells extends React.Component<BellsProps> {
                 );
             case "sort":
             case "make_music":
-                return <RecordToolbar />;
+                return <RecordToolbar instructions={this.props.instructions} />;
         }
     }
 
