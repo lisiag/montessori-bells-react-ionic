@@ -5,7 +5,8 @@ import {
     IonItem,
     IonLabel,
     IonPage,
-    IonText
+    IonText,
+    IonFooter
 } from "@ionic/react";
 import { Howl } from "howler";
 import { play } from "ionicons/icons";
@@ -119,6 +120,23 @@ const PlaySongs: React.FC = () => {
         }
     };
 
+    const footer = () => {
+        /* If user is not logged in, or user is logged in but has no songs saved in the database: no footer */
+        if (user == null || song == null) {
+            return;
+        } else {
+            /* If user is logged in and has a song saved in the database, display footer with instructions about how to play song */
+            return (
+                <p id="footer">
+                    Tap your song to hear it played.
+                    <br />
+                    To record and save a new song, go to{" "}
+                    <Link to="/make_music">Make music</Link>.
+                </p>
+            );
+        }
+    };
+
     /* useEffect is called after every render: when the component is first mounted and when it is updated */
     /* https://reactjs.org/docs/hooks-effect.html */
     /* https://www.digitalocean.com/community/tutorials/five-ways-to-convert-react-class-components-to-functional-components-with-react-hooks */
@@ -136,6 +154,7 @@ const PlaySongs: React.FC = () => {
                 <Topbar title="Play song" />
             </IonHeader>
             <IonContent className="ion-padding">{content()}</IonContent>
+            <IonFooter>{footer()}</IonFooter>
         </IonPage>
     );
 };
