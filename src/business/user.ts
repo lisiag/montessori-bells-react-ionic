@@ -57,18 +57,19 @@ export function onAuthStateChanged(callback: UserCallback) {
         userListeners = new Set();
         firebase.auth().onAuthStateChanged(async u => {
             try {
-                if (u !== null) {
+                if (u != null) {
                     // there is a user logged in
                     const email = u?.email;
                     const docRef = db.collection("bellUsers").doc(email!);
-                    const doc = await docRef.get();
-                    currentUser = {
-                        username: doc.data()!.username,
-                        email: doc.data()!.email
-                    };
-                } else {
-                    // user logged out?
-                }
+                    const data = (await docRef.get()).data();
+                    if (data != null) {
+                        currentUser = {
+                            username: data.username,
+                            email: data.email
+                        };
+                    }
+                } // else user logged out
+
                 if (userListeners != null) {
                     for (const cb of userListeners) {
                         cb(currentUser);
@@ -139,13 +140,13 @@ export async function loginUser(email: string, password: string, message = "") {
 
         // get the user's details from the 'bellUsers' table in this project's firebase project
         const docRef = db.collection("bellUsers").doc(email!);
-        const doc = await docRef.get();
+        const data = (await docRef.get()).data();
         // The following is duplicated from onAuthStateChanged, but my attempts to get the welcome
         // message and username to display correctly any other way have not yet succeeded
-        if (doc.exists) {
+        if (data != null) {
             currentUser = {
-                username: doc.data()!.username,
-                email: doc.data()!.email
+                username: data.username,
+                email: data.email
             };
         } else {
             // doc.data() will be undefined in this case
