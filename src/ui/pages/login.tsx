@@ -19,9 +19,11 @@ const Login: React.FC = () => {
 
     async function login(ev: FormEvent) {
         ev.preventDefault();
-        await loginUser(email, password);
+        const res = await loginUser(email, password);
         formRef.current!.reset();
-        history.push("/home");
+        if (res) {
+            history.push("/home");
+        }
     }
 
     return (
