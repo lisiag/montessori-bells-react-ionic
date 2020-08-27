@@ -20,8 +20,8 @@ const Login: React.FC = () => {
     async function login(ev: FormEvent) {
         ev.preventDefault();
         const res = await loginUser(email, password);
-        formRef.current!.reset();
         if (res) {
+            formRef.current!.reset();
             history.push("/home");
         }
     }

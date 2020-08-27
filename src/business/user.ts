@@ -116,7 +116,16 @@ export async function registerUser(
                 );
             });
 
-        loginUser(email, password, "You have registered successfully :)\n");
+        // Firebase automatically signs in the user upon registration so we need to set currentUser
+        // in order for the app to display their Gravatar immediately
+        currentUser = {
+            username: username,
+            email: email
+        };
+
+        toast(
+            `Thank you, ${username}. You have registered successfully, and you are now logged in :)\n`
+        );
         return true;
     } catch (registerError) {
         toast(registerError.message);
