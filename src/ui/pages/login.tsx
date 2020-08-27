@@ -15,10 +15,12 @@ const Login: React.FC = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
+    const formRef = React.createRef<HTMLFormElement>();
 
     async function login(ev: FormEvent) {
         ev.preventDefault();
         await loginUser(email, password);
+        formRef.current!.reset();
         history.push("/home");
     }
 
@@ -28,7 +30,7 @@ const Login: React.FC = () => {
                 <Topbar title="Log in" />
             </IonHeader>
             <IonContent className="ion-padding">
-                <form onSubmit={login}>
+                <form ref={formRef} onSubmit={login}>
                     <IonInput
                         type="email"
                         placeholder="email"
