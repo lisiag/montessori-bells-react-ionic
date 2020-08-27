@@ -113,7 +113,16 @@ export class RecordToolbar extends React.Component<
             return;
         }
         if (this.state.recording) {
-            this.openSave(); // triggers modal to pop up, inviting user to save song
+            // user has stopped recording
+            if (song.length > 0) {
+                // some notes have been recorded
+                this.openSave(); // triggers modal to pop up, inviting user to save song
+            } else {
+                // the recording is empty/silent so no point in saving song
+                toast(
+                    `No notes were played during recording; there is no song to save.`
+                );
+            }
         } else {
             recordSong(); // start recording the bells that are tapped
         }
