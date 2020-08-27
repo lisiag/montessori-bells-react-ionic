@@ -4,7 +4,7 @@
     justify-content: space-between;
 }
 
-#recordToolbar button {
+#recordToolbar .button {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -16,7 +16,7 @@
     outline-color: rgba(0,0,0,0);
 }
 
-#recordToolbar button ion-icon {
+#recordToolbar .button ion-icon {
     font-size: 22px;
 }
 

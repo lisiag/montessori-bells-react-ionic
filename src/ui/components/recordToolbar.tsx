@@ -1,6 +1,7 @@
 import { IonIcon, IonLabel, IonInput, IonButton } from "@ionic/react";
 import { close, ellipse, helpCircle, musicalNotes, stop } from "ionicons/icons";
 import React, { DetailedReactHTMLElement, HTMLAttributes } from "react";
+import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "./toast";
@@ -198,10 +199,10 @@ export class RecordToolbar extends React.Component<
                     </div>
                 </Modal>
 
-                <button onClick={() => {}}>
+                <NavLink className="button" to="/play_songs">
                     <IonIcon icon={musicalNotes} />
                     <IonLabel>My song</IonLabel>
-                </button>
+                </NavLink>
             </div>
         );
     }
