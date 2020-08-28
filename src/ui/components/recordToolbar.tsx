@@ -172,6 +172,7 @@ export class RecordToolbar extends React.Component<
                     <div id="save">
                         <form>
                             <IonInput
+                                id="songTitle"
                                 placeholder="song name"
                                 onIonChange={e => (title = e.detail.value!)}
                             />
