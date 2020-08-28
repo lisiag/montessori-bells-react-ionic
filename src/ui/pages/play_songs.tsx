@@ -12,15 +12,13 @@ import { Howl } from "howler";
 import { play } from "ionicons/icons";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { currentUser, onAuthStateChanged, User } from "../../business/user";
 import {
-    currentUser,
     getSong,
     NoteTime,
-    onAuthStateChanged,
     addSongsListener,
-    SongData,
-    User
-} from "../../business/user";
+    SongData
+} from "../../business/song";
 import { Util } from "../../business/util";
 import { Topbar } from "../components/topbar";
 import "./play_songs.css";

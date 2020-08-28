@@ -5,13 +5,8 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
 import { toast } from "./toast";
-import {
-    saveSong,
-    NoteTime,
-    currentUser,
-    onAuthStateChanged,
-    User
-} from "../../business/user";
+import { currentUser, onAuthStateChanged, User } from "../../business/user";
+import { saveSong, NoteTime } from "../../business/song";
 import "./recordToolbar.css";
 
 /* although empty, this seems to be required; otherwise RecordToolBarState is not accepted */
