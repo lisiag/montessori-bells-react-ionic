@@ -1,5 +1,8 @@
 import { db, currentUser } from "./user";
 
+// Business interface that can be called on by the UI and that in turn calls on the Firebase songs
+// database, thus keeping the UI and songs data separated
+
 // units of song
 export interface NoteTime {
     note: number;
