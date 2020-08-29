@@ -9,7 +9,6 @@ import { currentUser, onAuthStateChanged, User } from "../../business/user";
 import { saveSong, NoteTime } from "../../business/song";
 import "./recordToolbar.css";
 
-/* although empty, this seems to be required; otherwise RecordToolBarState is not accepted */
 export interface RecordToolbarProps {
     instructions: DetailedReactHTMLElement<
         HTMLAttributes<HTMLElement>,
@@ -31,7 +30,7 @@ let title = "";
 /* Get all the bells so their notes can be stored in the recorded song */
 const bells = document.getElementsByClassName("fixedBell");
 
-/* A toolbar of buttons relating to the 'making music' activity */
+/* A toolbar of buttons relating to the 'Make music' activity */
 export class RecordToolbar extends React.Component<
     RecordToolbarProps,
     RecordToolbarState

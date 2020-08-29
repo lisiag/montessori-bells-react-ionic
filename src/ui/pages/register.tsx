@@ -19,6 +19,7 @@ const Register: React.FC = () => {
     const history = useHistory();
     const formRef = React.createRef<HTMLFormElement>();
 
+    /* When Register button is tapped */
     async function register(ev: FormEvent) {
         ev.preventDefault();
         let res = false;

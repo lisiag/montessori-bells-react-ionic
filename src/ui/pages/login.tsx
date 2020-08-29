@@ -17,9 +17,11 @@ const Login: React.FC = () => {
     const history = useHistory();
     const formRef = React.createRef<HTMLFormElement>();
 
+    /* When the login button is tapped */
     async function login(ev: FormEvent) {
         ev.preventDefault();
         const res = await loginUser(email, password);
+        /* If login is successful, clear the login form and redirect to home page */
         if (res) {
             formRef.current!.reset();
             history.push("/home");

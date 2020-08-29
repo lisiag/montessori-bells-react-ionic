@@ -33,6 +33,7 @@ export class Topbar extends React.Component<
         });
     }
 
+    /* Depending on whether user is logged in, display login icon or user's gravatar */
     loginProfile() {
         const { user } = this.state;
         if (user != null) {

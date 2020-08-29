@@ -24,7 +24,8 @@ import { Topbar } from "../components/topbar";
 import "./play_songs.css";
 
 /* Play the current logged in user's song. In the future a user will be able to record and save and
-play more than one song. If user is not logged in, this is not called. */
+   play more than one song. If user is not logged in, this is not called. NoteTime is the format in
+   which the parts of a song are stored (start time and note) */
 const playSong = async (song: NoteTime[]) => {
     try {
         let start = song[0].time;
@@ -52,9 +53,11 @@ const PlaySongs: React.FC = () => {
     const [song, setSong] = useState(null) as [SongData | null, any];
 
     const checkForUserAndSong = () => {
+        /* set user to the current logged in user */
         if (user !== currentUser) {
             setUser(currentUser);
         }
+        /* if there is no logged in user, then there is no saved song */
         if (user != null) {
             getSong() /* returns songData */
                 .then(currentSong => {

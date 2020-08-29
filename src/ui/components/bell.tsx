@@ -17,6 +17,7 @@ const RIGHT_BOUND_FACTOR = 2.12;
 /* used for creating unique id */
 let gradCounter = 0;
 
+/* An individual bell. Has a note (the sound that plays when its tapped) and a location on the page. */
 export class Bell extends React.Component<BellProps> {
     /* Definite assignment assertion so howl can be initialized in a function separate from constructor */
     howl!: Howl;
@@ -51,6 +52,7 @@ export class Bell extends React.Component<BellProps> {
         };
     }
 
+    /* When the draggable starts being dragged */
     onStart(ui: DraggableData) {
         this.startPosition = {
             x: ui.x,
@@ -58,6 +60,7 @@ export class Bell extends React.Component<BellProps> {
         };
     }
 
+    /* When the draggable stops being dragged */
     onStop(ui: DraggableData) {
         /* only play the note if bell is clicked but not dragged */
         if (this.startPosition.x === ui.x && this.startPosition.y === ui.y) {
@@ -142,6 +145,7 @@ export class Bell extends React.Component<BellProps> {
         return { x, y };
     }
 
+    /* Bell image */
     bellSvg(type: string) {
         /* To get around Ionic's use of shadow DOM, the colour gradient used as the "fill" of the
         svg must have a unique id. Otherwise the bell only displays the first time the page is

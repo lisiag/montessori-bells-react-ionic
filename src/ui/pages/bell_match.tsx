@@ -8,14 +8,17 @@ export interface BellMatchProps {
     match: match<Record<string, string | undefined>>;
 }
 
-/* The page for matching one pair of bells activity */
+/* The page for bell matching activities */
 export class BellMatch extends React.Component<BellMatchProps> {
+    /* Difficulty level of activity. Indicates which activity to render: 1 - Match bell; 3 - Match
+    bell 3; 8 - Match bell octave */
     level!: number;
     title: string;
     instructions!: DetailedReactHTMLElement<
         HTMLAttributes<HTMLElement>,
         HTMLElement
     >;
+    /* number of rows of bells - number of fixed bells - the bells in the righthand column */
     numRows!: number;
 
     constructor(props: BellMatchProps) {
