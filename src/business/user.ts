@@ -1,6 +1,13 @@
 import * as firebase from "firebase";
 import { toast } from "../ui/components/toast";
 
+// This file sets up external data storage using Firebase Cloud Firestore and provides an interface
+// that can be called on by the UI to get user data, and that in turn calls on the Firebase Users
+// and BellUsers tables, thus keeping the UI and user data separated
+
+// this project's firebase project:
+// https://console.firebase.google.com/project/montessori-bells
+
 // firebase config
 const config = {
     apiKey: "AIzaSyAZjL_cU29wH7Fd2tDg__u0KfnBqbEe9mk",
@@ -12,9 +19,6 @@ const config = {
     appId: "1:557233625660:web:59408fc9a196732bcc0139",
     measurementId: "G-51V5E9N00G"
 };
-
-// this project's firebase project:
-// https://console.firebase.google.com/project/montessori-bells
 
 firebase.initializeApp(config);
 
