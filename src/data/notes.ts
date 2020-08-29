@@ -9,6 +9,7 @@ export class Notes {
         /* Names of the notes of the scale of C major from middle-C in descending order */
         const noteNames = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
 
+        // associate a colour with each note
         const colors = [
             "red",
             "darkorange",
