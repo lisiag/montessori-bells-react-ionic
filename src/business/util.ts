@@ -1,6 +1,8 @@
 import { Notes } from "../data/notes";
 import { Note } from "../data/note";
 
+// A utility interface that can be called on by the UI and that in turn calls on the notes data,
+// thus keeping the UI and notes data separated
 export const Util = {
     /*
        Get n random numbers between 0 (inclusive) and arrLen (exclusive).
